@@ -8,8 +8,6 @@
 
 </head>
 <body>
-	<%String user_id = (String)session.getAttribute("member_id"); %>
-	<p><%=user_id %></p>
 	<div id = "page">
 		<form name="loginform" action=login_ok.jsp method=get onSubmit="return login();">
 			<table style = "margin : 5% auto;">

@@ -5,62 +5,24 @@
 <head>
 <meta charset="UTF-8">
 <%@ include file="./dbconn.jsp" %>
+
 <title>Insert title here</title>
-
-<script>
-	function validateForm() {
-		var opt = document.SearchForm.opt.value;
-		var search = document.SearchForm.search.value;
-		if(opt == "1") {
-			alert("항목을 골라주세요.");
-			return false;
-		} else {
-			if(search == "") {
-				alert("검색어를 입력하세요.");
-				return false;
-			}
-			return true;
-		}
-	}
-</script>
-
 </head>
 <body>
 	<button onclick = "location = 'login.jsp'">홈</button>
-	<form name="SearchForm" action=member_list_ok.jsp method=get onSubmit="return validateForm();">
-		<table>
-			<tr>
-				<td>
-					<select name = "opt" id = "opt">
-						<option value = "1">항목</option>
-						<option value = "member_id">ID</option>
-						<option value = "member_name">이름</option>
-						<option value = "lot_addr">지번주소</option>
-						<option value = "road_addr">도로명주소</option>
-					</select>
-				</td>
-				<td>
-					<input type = "text" name = "search" id = "search">
-				</td>
-				<td>
-					<input type = "submit" >
-				</td>
-			</tr>
-		</table>
-	</form>
-	<div style = "overflow-x: scroll; width: max-content;">
-		<%
+	<% 
+		String opt=request.getParameter("opt");
+		String search=request.getParameter("search");
+		int count = 0;
+		
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String sql = "SELECT * FROM shopping_member ORDER BY member_name ASC";
+		String sql = "SELECT * FROM shopping_member WHERE " + opt + " like '%" + search + "%'";
 		pstmt = conn.prepareStatement(sql);
-	
-		// 4) 실행
 		rs = pstmt.executeQuery();
-	
-		// 5) 결과를 테이블에 출력
 		while (rs.next()) {
+			count++;
 			String member_id = rs.getString("member_id");
 			String name = rs.getString("member_name");
 			String gender = rs.getString("member_gender");
@@ -80,11 +42,31 @@
 			String DBroad_addr = rs.getString("road_addr");
 			String DBrest_addr = rs.getString("rest_addr");
 			String joindate = rs.getString("joindate");
-			
-			
-		%>
-		<table border = "1" id = "list">
-			<tr>
+	%>
+			<form name="SearchForm" action=member_list_ok.jsp method=get onSubmit="return validateForm();">
+			<table>
+				<tr>
+					<td>
+						<select name = "opt" id = "opt" >
+							<option value = "1">항목</option>
+							<option value = "D">ID</option>
+							<option value = "member_name">이름</option>
+							<option value = "lot_addr">지번주소</option>
+							<option value = "road_addr">도로명주소</option>
+						</select>
+					</td>
+					<td>
+						<input type = "text" name = "search" id = "search">
+					</td>
+					<td>
+						<input type = "submit" >
+					</td>
+				</tr>
+			</table>
+		</form>
+		<button onclick = "location = 'login.jsp'">전체 리스트보기</button>
+			<table border = "1" id = "list">
+				<tr>
 					<td>ID</td><td class = "id"><%=member_id%></td>
 					<td>이름</td><td><%=name %></td>
 					<td>성별</td><td><%=gender %></td>
@@ -98,24 +80,13 @@
 					<td>도로명주소</td><td><%=DBroad_addr%></td>
 					<td>나머지주소</td><td><%=DBrest_addr%></td>
 					<td>가입날짜</td><td><%=joindate%></td>
-			</tr>
-		</table>
-		<%
-			}
-		%>
-	</div>
+				</tr>
+			</table>
+	<%
+		}
+		if(count == 0) {
+			out.print("검색결과가 없습니다.");
+		}
+	%>
 </body>
 </html>
-
-<style>
-	#list>table {table-laylout : fixed; width : 100%;}
-
-	#list>td:nth-child(odd) {
-		background : #E5E4CC;
-		width : max-content;
-	}
-	
-	#list>td:nth-child(even){
-		width : max-content;
-	}
-</style>
