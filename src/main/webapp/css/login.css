@@ -1,0 +1,75 @@
+@charset "UTF-8";
+
+body {
+	min-width: 1340px;
+	display: block;
+    margin: 8px;
+}
+
+#page {
+	width: 350px;
+    height: 275px;
+    background: #F0EBE3;
+    border-radius: 40px;
+    padding: 5%;
+    margin: 20% auto;
+    box-shadow: 5px 5px 14px #E8DFCA;
+}
+
+form {
+	width : 363px;
+	margin: 15% auto;
+	margin-bottom :0;
+    padding: 0%;
+}
+
+td {
+	text-align: center;
+}
+
+table {
+	margin: 5% auto;
+    margin-bottom: 2%;
+}
+
+.user {
+	margin : 1% auto;
+	width: 200px;
+    height: 30px;
+    border: 1px;
+    border-radius: 10px;
+    padding-left: 5px;
+}
+
+#submit {
+	margin-top: 3%;
+    width: 220px;
+    height: 33px;
+    background: #576F72;
+    border: 0;
+    color: white;
+    font-size: large;
+}
+
+#button {
+	margin: 0 20.5%;
+    width: 220px;
+    height: 33px;
+    background: #7D9D9C;
+    border: 0;
+    color: white;
+    font-size: large;
+}
+
+#manage {
+	margin-top: 80px;
+    color : #BBBFCA;
+    text-align : center;
+}
+
+#manage_num {
+	border: 1px solid #BBBFCA;
+    padding: 1px;
+    height: 22px;
+    background: #E8E8E8;
+}

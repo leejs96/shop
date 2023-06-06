@@ -5,6 +5,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Insert title here</title>
+		<link rel="stylesheet" href = "./css/member.css">
 		
 		<script>
 			function check_id(user_id) { // 아이디 체크
@@ -220,76 +221,94 @@
 	</head>
 	
 	<body>
-		<h1>회원가입</h1>
-		<h2>필수입력사항</h2>
-		<form name="Registform" action=member_ok.jsp method=get onSubmit="return validateForm();">
-			<table border = "1">
-				<tr>
-					<td>아이디</td>  <td><input type = "text" name=user_id id=user_id></td>
-				</tr>
-				<tr>
-					<td>비밀번호</td>  <td><input type = "password" name=user_pw id=user_pw>비밀번호 확인<input type = "password" name=user_pw_ch id=user_pw_ch></td>
-				</tr>
-				<tr>
-					<td>이름</td>  <td><input type = "text" name=user_name id=user_name></td>
-				</tr>
-				<tr>
-					<td>성별</td>
-					<td>
-						<input type = "radio" name = "gender" value = "male">남자
-						<input type = "radio" name = "gender" value = "female">여자
-					</td>
-				</tr>
-				<tr>
-					<td>법정생년월일</td>  <td colspan = "3"><input type = "text" name=user_birth_y id=user_birth_y>/<input type = "text" name=user_birth_m id=user_birth_m>/<input type = "text" name=user_birth_d id=user_birth_d>
-						<input type = "radio" name = "birth_SL" value = "양" checked>양력
-						<input type = "radio" name = "birth_SL" value = "음">음력
-					</td>
-				</tr>
-				<tr>
-					<td rowspan = "2">휴대폰번호</td>  <td colspan = "3"><input type = "text" name=user_hp1 id=user_hp1>-<input type = "text" name=user_hp2 id=user_hp2>-<input type = "text" name=user_hp3 id=user_hp3></td>
-				</tr>
-				<tr>
-					<td>
-						<input type = "checkbox" name = "sms" value = "Y" id = "sms">쇼핑몰에서 발송하는 SMS 소식을 수신합니다.
-						<!-- <input type = "hidden" name = "sms_N" value = "N" id = "sms_N"> -->
-					</td>
-				</tr>
-				<tr>
-					<td rowspan = "2">이메일<br>(e-mail)</td>
-					<td colspan = "3"><input type = "text" name=user_email1 id=user_email1>@<input type = "text" name=user_email2 id=user_email2>
-						<select name = "select_email" onchange="selectEmail();">
-							<option value = "1">직접입력 </option>
-							<option value = "naver.com">naver.com</option>
-							<option value = "gmail.com">gmail.com</option>
-							<option value = "daum.net">daum.net</option>
-						</select>
-					</td>
-				</tr>
+		<div class = "wrap">
+			<h1>회원가입</h1>
+			<h2>필수입력사항</h2>
+			<form name="Registform" action=member_ok.jsp method=get onSubmit="return validateForm();">
+				<table>
 					<tr>
-					<td><input type = "checkbox" name = "emailsts" value = "Y" id = "emailsts">
-							<!-- <input type = "hidden" name = "emailsts_N" value = "N" id = "emailsts_N"> -->
-							쇼핑몰에서 발송하는 e-mail을 수신합니다.</td>
+						<td class = "title" >아이디</td>  <td colspan = "3"><input type = "text" name=user_id id=user_id></td>
 					</tr>
 					<tr>
-					<td rowspan = "4">주소</td>
-					<td colspan = "3">우편번호<input type = "text" name=zipcode id=zipcode></td>
-				</tr>
-				<tr>
-					<td colspan = "3">지번주소<input type = "text" name=lot_addr id=lot_addr></td>
-				</tr>
-				<tr>
-					<td colspan = "3">도로명주소<input type = "text" name=road_addr id=road_addr></td>
-				</tr>
-				<tr>
-					<td colspan = "3">나머지주소<input type = "text" name=rest_addr id=rest_addr></td>
-				</tr>
-			</table>
+						<td class = "title">비밀번호</td> 
+						<td><input type = "password" name=user_pw id=user_pw></td>
+					</tr>
+					<tr>
+						<td class = "title">비밀번호 확인</td>
+						<td><input type = "password" name=user_pw_ch id=user_pw_ch></td>
+					</tr>
+					<tr>
+						<td class = "title">이름</td>
+						<td colspan = "3"><input type = "text" name=user_name id=user_name></td>
+					</tr>
+					<tr>
+						<td class = "title">성별</td>
+						<td>
+							<input type = "radio" name = "gender" value = "male">남자
+							<input type = "radio" name = "gender" value = "female">여자
+						</td>
+					</tr>
+					<tr>
+						<td class = "title">법정생년월일</td>
+						<td colspan = "3">
+							<input type = "text" name=user_birth_y id=user_birth_y class = "birth">/<input type = "text" name=user_birth_m id=user_birth_m class = "birth">/<input type = "text" name=user_birth_d id=user_birth_d class = "birth">
+							<input type = "radio" name = "birth_SL" value = "양" checked>양력
+							<input type = "radio" name = "birth_SL" value = "음">음력
+						</td>
+					</tr>
+					<tr>
+						<td rowspan = "2" class = "title">휴대폰번호</td> 
+						<td colspan = "3" class = "hp"><input type = "text" name=user_hp1 class = "hp" id=user_hp1>-<input type = "text" name=user_hp2  class = "hp" id=user_hp2>-<input type = "text" name=user_hp3  class = "hp" id=user_hp3></td>
+					</tr>
+					<tr>
+						<td colspan = "3">
+							<input type = "checkbox" name = "sms" value = "Y" id = "sms">쇼핑몰에서 발송하는 SMS 소식을 수신합니다.
+							<!-- <input type = "hidden" name = "sms_N" value = "N" id = "sms_N"> -->
+						</td>
+					</tr>
+					<tr>
+						<td rowspan = "2" class = "title">이메일<br>(e-mail)</td>
+						<td colspan = "3"><input type = "text" name=user_email1 id=user_email1>@<input type = "text" name=user_email2 id=user_email2>
+							<select name = "select_email" onchange="selectEmail();">
+								<option value = "1">직접입력 </option>
+								<option value = "naver.com">naver.com</option>
+								<option value = "gmail.com">gmail.com</option>
+								<option value = "daum.net">daum.net</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td colspan = "3"><input type = "checkbox" name = "emailsts" value = "Y" id = "emailsts">
+						<!-- <input type = "hidden" name = "emailsts_N" value = "N" id = "emailsts_N"> -->
+						쇼핑몰에서 발송하는 e-mail을 수신합니다.</td>
+					</tr>
+					<tr>
+						<td rowspan = "8" class = "title">주소</td>
+						<td class = "addr">우편번호<br>
+							<input type = "text" name=zipcode>
+						</td>
+					</tr>
+					<tr>
+						<td class = "addr">지번주소<br>
+							<input type = "text" name=lot_addr class=addr>
+						</td>
+					</tr>
+					<tr>
+						<td class = "addr">도로명주소<br>
+							<input type = "text" name=road_addr class=addr>
+						</td>
+					</tr>
+					<tr>
+						<td class = "addr">나머지주소<br>
+							<input type = "text" name=rest_addr class=addr>
+						</td>
+					</tr>
+				</table>
+				
+				<input type=submit value='회원 가입' class = "submit">
 			
-			<input type=submit value='회원 가입'>
-		
-		</form>
-		
+			</form>
+		</div>
 	</body>
 </html>
 

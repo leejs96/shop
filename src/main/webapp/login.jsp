@@ -6,27 +6,31 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
+<link rel="stylesheet" href = "./css/login.css?after">
 </head>
 <body>
 	<div id = "page">
 		<form name="loginform" action=login_ok.jsp method=get onSubmit="return login();">
-			<table style = "margin : 5% auto;">
+			<table>
 				<tr>
-					<td><input type = "text" name = "user_id" id = "user_id" placeholder = "ID"></td>
+					<td><input type = "text" name = "user_id" class = "user" placeholder = "ID"></td>
 				</tr>
 				<tr>
-					<td><input type = "password" name = "user_pw" id = "user_pw" placeholder = "password"></td>
+					<td><input type = "password" name = "user_pw" class = "user" placeholder = "password"></td>
 				</tr>
 				<tr>
-					<td class = "button"><input type = "submit" value = "로그인"></td>
+					<td rowspan = "2"><input type = "submit" value = "로그인" id = "submit"></td>
 				</tr>
 			</table>
 		</form>
-		<button class = "button" onclick = "location = 'member.jsp'">회원가입</button>
-		<br>		
-		회원관리
-		<input type = "text" name = "manage_num" id = "manage_num" placeholder = "관리자번호">
-		<button onclick = "manage();">확인</button>
+		<button id = "button" onclick = "location = 'member.jsp'" style = "">회원가입</button>
+		<br>
+
+		<div id = "manage">
+			회원관리
+			<input type = "text" name = "manage_num" id = "manage_num" placeholder = "관리자번호">
+			<button onclick = "manage();" style = "background-color: #E8E8E8; border: 1px solid #BBBFCA; height: 25px;">확인</button>
+		</div>
 	</div>
 </body>
 </html>

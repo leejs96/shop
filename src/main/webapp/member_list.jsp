@@ -6,19 +6,16 @@
 <meta charset="UTF-8">
 <%@ include file="./dbconn.jsp" %>
 <title>Insert title here</title>
+<link rel="stylesheet" href = "./css/mem_list.css">
 
 <script>
 	function validateForm() {
 		var opt = document.SearchForm.opt.value;
 		var search = document.SearchForm.search.value;
-		if(opt == "1") {
-			alert("항목을 골라주세요.");
+		if(opt != "1") {
+			alert("검색어를 입력하세요.");
 			return false;
 		} else {
-			if(search == "") {
-				alert("검색어를 입력하세요.");
-				return false;
-			}
 			return true;
 		}
 	}
@@ -26,29 +23,79 @@
 
 </head>
 <body>
-	<button onclick = "location = 'login.jsp'">홈</button>
-	<form name="SearchForm" action=member_list_ok.jsp method=get onSubmit="return validateForm();">
+	<button onclick = "location = 'login.jsp'" id = "main">홈</button>
+	<h1>회원리스트</h1>
+	<form name="SearchForm" action=member_list_ok.jsp method=get onSubmit="return validateForm();" style = "margin : 5px;">
 		<table>
+			<tr><td id = "search" colspan = "2">검색조건</td></tr>
 			<tr>
-				<td>
-					<select name = "opt" id = "opt">
+				<td colspan = "2">
+					<select name = "opt" id = "opt" style = "width: 83px;">
 						<option value = "1">항목</option>
 						<option value = "member_id">ID</option>
 						<option value = "member_name">이름</option>
 						<option value = "lot_addr">지번주소</option>
 						<option value = "road_addr">도로명주소</option>
 					</select>
+					<input type = "text" name = "search">
+					<input type = "submit" id = "submit">
 				</td>
+			</tr>
+			<tr>
+				<td class="cond">성별</td>
 				<td>
-					<input type = "text" name = "search" id = "search">
+					<input type = "checkbox" name = "male" value = "male">남자
+					<input type = "checkbox" name = "female" value = "female">여자
 				</td>
+			</tr>
+			<tr>
+				<td class="cond">SMS수신</td>
 				<td>
-					<input type = "submit" >
+					<input type = "checkbox" name = "SMSY" value = "Y">허용
+					<input type = "checkbox" name = "SMSN" value = "N">미허용
+				</td>
+			</tr>
+			<tr>
+				<td class="cond">email수신</td>
+				<td>
+					<input type = "checkbox" name = "emailY" value = "Y">허용
+					<input type = "checkbox" name = "emailN" value = "N">미허용
 				</td>
 			</tr>
 		</table>
 	</form>
-	<div style = "overflow-x: scroll; width: max-content;">
+	<table border = "1" id = "list">
+		<!-- <colgroup>
+			<col width = "8%">
+			<col width = "6%">
+			<col width = "4%">
+			<col width = "8%">
+			<col width = "10%">
+			<col width = "8%">
+			<col width = "8%">
+			<col width = "8%">
+			<col width = "8%">
+			<col width = "8%">
+			<col width = "8%">
+			<col width = "8%">
+			<col width = "8%">
+		</colgroup> -->
+		<tr style = "background: #7D9D9C; color: white;">
+			<td>ID</td>
+			<td>이름</td>
+			<td>성별</td>
+			<td>생년월일</td>
+			<td>HP</td>
+			<td>sms수신</td>
+			<td>이메일</td>
+			<td>메일수신</td>
+			<td>우편번호</td>
+			<td>지번주소</td>
+			<td>도로명주소</td>
+			<td>나머지주소</td>
+			<td>가입날짜</td>
+		</tr>
+		
 		<%
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -83,39 +130,25 @@
 			
 			
 		%>
-		<table border = "1" id = "list">
 			<tr>
-					<td>ID</td><td class = "id"><%=member_id%></td>
-					<td>이름</td><td><%=name %></td>
-					<td>성별</td><td><%=gender %></td>
-					<td>생년월일</td><td><%=birth_y%>/<%=birth_m%>/<%=birth_d%>(<%=birth_gn%>)</td>
-					<td>HP</td><td><%=HP1%>-<%=HP2%>-<%=HP3%></td>
-					<td>sms수신</td><td><%=SMS_YN%></td>
-					<td>이메일</td><td><%=email1%>@<%=email2%></td>
-					<td>메일수신</td><td><%=emailsts_YN%></td>
-					<td>우편번호</td><td><%=DBzipcode%></td>
-					<td>지번주소</td><td><%=DBlot_addr%></td>
-					<td>도로명주소</td><td><%=DBroad_addr%></td>
-					<td>나머지주소</td><td><%=DBrest_addr%></td>
-					<td>가입날짜</td><td><%=joindate%></td>
+				<td><%=member_id%></td>
+				<td><%=name %></td>
+				<td><%=gender %></td>
+				<td><%=birth_y%>/<%=birth_m%>/<%=birth_d%>(<%=birth_gn%>)</td>
+				<td><%=HP1%>-<%=HP2%>-<%=HP3%></td>
+				<td><%=SMS_YN%></td>
+				<td><%=email1%>@<%=email2%></td>
+				<td><%=emailsts_YN%></td>
+				<td><%=DBzipcode%></td>
+				<td><%=DBlot_addr%></td>
+				<td><%=DBroad_addr%></td>
+				<td><%=DBrest_addr%></td>
+				<td><%=joindate%></td>
 			</tr>
-		</table>
 		<%
 			}
 		%>
-	</div>
-</body>
+		</table>
+	</body>
 </html>
 
-<style>
-	#list>table {table-laylout : fixed; width : 100%;}
-
-	#list>td:nth-child(odd) {
-		background : #E5E4CC;
-		width : max-content;
-	}
-	
-	#list>td:nth-child(even){
-		width : max-content;
-	}
-</style>

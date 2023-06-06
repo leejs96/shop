@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <%@ include file="./dbconn.jsp" %>
-
+<link rel="stylesheet" href = "./css/member.css?after">
 <title>Insert title here</title>
 
 <script>
@@ -70,7 +70,6 @@ function check_address(addr1, addr2, addr3, addr4) {
 	}
 }
 
-
 function validateForm() {
 	/* console.log('확인'); */
 	
@@ -117,9 +116,14 @@ function validateForm() {
 </head>
 
 <body>
-	<h1>내 정보</h1>
+	<div style = "text-align: center; margin: 1% auto; padding-left: 25%; width : 605px;">
+		<button onclick = "location = 'main.jsp'" class = "top">홈</button>
+		<button onclick = "location = 'logout.jsp'" class = "top">로그아웃</button>
+	</div>
+	<h1 style = "text-align : center;">내 정보</h1>
 	<%
 		String user_id = (String)session.getAttribute("member_id");
+		/* out.print(user_id); */
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
@@ -149,91 +153,107 @@ function validateForm() {
 			String DBroad_addr = rs.getString("road_addr");
 			String DBrest_addr = rs.getString("rest_addr");
 			String joindate = rs.getString("joindate");
-		
 	%>
-	<form name="my_info" action=update.jsp method=get onSubmit="return validateForm();">
-		<table border = "1">
-			<tr>
-				<td>아이디</td>
-				<td><input type = "text" name=user_id id=user_id value = <%=member_id%> disabled></td>
-			</tr>
-			<tr>
-				<td>비밀번호</td>  <td><input type = "password" name=user_pw id=user_pw>비밀번호 확인<input type = "password" name=user_pw_ch id=user_pw_ch></td>
-			</tr>
-			<tr>
-				<td>이름</td>  <td><input type = "text" name=user_name id=user_name value=<%=name%> disabled></td>
-			</tr>
-			<tr>
-				<td>성별</td>
-				<td>
-					<input type = "radio" name = "gender" value = "male" 
-					<%if(gender.equals("male")) out.print("checked");%>
-					>남자
-					<input type = "radio" name = "gender" value = "female" 
-					<%if(gender.equals("female")) out.print("checked");%>>여자
-				</td>
-			</tr>
-			<tr>
-				<td>법정생년월일</td>
-				<td colspan = "3">
-					<input type = "text" name=user_birth_y id=user_birth_y value = <%=birth_y%>>/<input type = "text" name=user_birth_m id=user_birth_m value = <%=birth_m%>>/<input type = "text" name=user_birth_d id=user_birth_d value =<%=birth_d%>>
-					<input type = "radio" name = "birth_SL" value = "양" checked>양력
-					<input type = "radio" name = "birth_SL" value = "음">음력
-				</td>
-			</tr>
-			<tr>
-				<td rowspan = "2">휴대폰번호</td>
-				<td colspan = "3">
-					<input type = "text" name=user_hp1 id=user_hp1 value = <%=HP1%>>-<input type = "text" name=user_hp2 id=user_hp2 value = <%=HP2%>>-<input type = "text" name=user_hp3 id=user_hp3 value = <%=HP3%>>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<input type = "checkbox" name = "sms" value='Y' id="sms">
-					<input type="hidden" name="sms" value='N' id="sms_hidden">
-					쇼핑몰에서 발송하는 SMS 소식을 수신합니다.
-				</td>
-			</tr>
-			<tr>
-				<td rowspan = "2">이메일<br>(e-mail)</td>
-				<td colspan = "3">
-					<input type = "text" name=user_email1 id=user_email1 value = <%=email1%>>@<input type = "text" name=user_email2 id=user_email2 value = <%=email2%>>
-					<select name = "select_email" onchange="selectEmail();">
-						<option value = "1">직접입력</option>
-						<option value = "naver.com">naver.com</option>
-						<option value = "gmail.com">gmail.com</option>
-						<option value = "daum.net">daum.net</option>
-					</select>
-				</td>
-			</tr>
+	<div  class = "wrap">
+		<form name="my_info" action=update.jsp method=get onSubmit="return validateForm();">
+			<table border = "1">
 				<tr>
-					<td><input type = "checkbox" name = "emailsts" value = "Y"  id="emailsts">
-					<input type="hidden" name="emailsts" value='N' id="emailsts_hidden">
-					쇼핑몰에서 발송하는 e-mail을 수신합니다.</td>
+					<td class = "title">아이디</td>
+					<td><input type = "text" name=user_id id=user_id value = <%=member_id%> disabled></td>
 				</tr>
-			<tr>
-				<td rowspan = "4">주소</td>
-				<td colspan = "3">우편번호<input type = "text" name=zipcode id=zipcode value=<%=DBzipcode%>></td>
-			</tr>
-			<tr>
-				<td colspan = "3">지번주소<input type = "text" name=lot_addr id=lot_addr value=<%=DBlot_addr%>></td>
-			</tr>
-			<tr>
-				<td colspan = "3">도로명주소<input type = "text" name=road_addr id=road_addr value=<%=DBroad_addr%>></td>
-			</tr>
-			<tr>
-				<td colspan = "3">나머지주소<input type = "text" name=rest_addr id=rest_addr value=<%=DBrest_addr%>></td>
-			</tr>
-			<tr>
-				<td>가입날짜</td>
-				<td><input type = "text" id = "joindate" value = <%=joindate %> disabled></td>
-			</tr>
-		</table>
-		<input type = "submit" value = "수정">
-	</form>
-		<button onclick = "location = 'main.jsp'">메인</button>
-		<button onclick = "location = 'delete.jsp'">회원탈퇴</button>
+				<tr>
+					<td class = "title">비밀번호</td>
+					<td><input type = "password" name=user_pw id=user_pw></td>
+				</tr>
+				<tr>
+					<td class = "title">비밀번호 확인</td>
+					<td><input type = "password" name=user_pw_ch id=user_pw_ch></td>
+				</tr>
+				<tr>
+					<td class = "title">이름</td>
+					<td><input type = "text" name=user_name id=user_name value=<%=name%> disabled></td>
+				</tr>
+				<tr>
+					<td class = "title">성별</td>
+					<td>
+						<input type = "radio" name = "gender" value = "male" 
+						<%if(gender.equals("male")) out.print("checked");%>
+						>남자
+						<input type = "radio" name = "gender" value = "female" 
+						<%if(gender.equals("female")) out.print("checked");%>>여자
+					</td>
+				</tr>
+				<tr>
+					<td class = "title">법정생년월일</td>
+					<td colspan = "3">
+						<input type = "text" name=user_birth_y id=user_birth_y value = <%=birth_y%> class = "birth">/<input type = "text" name=user_birth_m id=user_birth_m value = <%=birth_m%> class = "birth">/<input type = "text" name=user_birth_d id=user_birth_d value =<%=birth_d%> class = "birth">
+						<input type = "radio" name = "birth_SL" value = "양" <%if(birth_gn.equals("양")) {%>checked<%} %>>양력
+						<input type = "radio" name = "birth_SL" value = "음" <%if(birth_gn.equals("음")) {%>checked<%} %>>음력
+					</td>
+				</tr>
+				<tr>
+					<td rowspan = "2" class = "title">휴대폰번호</td>
+					<td colspan = "3">
+						<input type = "text" name=user_hp1 id=user_hp1 value = <%=HP1%> class = "hp">-<input type = "text" name=user_hp2 id=user_hp2 value = <%=HP2%> class = "hp">-<input type = "text" name=user_hp3 id=user_hp3 value = <%=HP3%> class = "hp">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type = "checkbox" name = "sms" value='Y' id="sms" <%if(SMS_YN.equals("Y")) {%>checked<%} %>>
+						<input type="hidden" name="sms" value='N' id="sms_hidden">
+						쇼핑몰에서 발송하는 SMS 소식을 수신합니다.
+					</td>
+				</tr>
+				<tr>
+					<td rowspan = "2" class = "title">이메일<br>(e-mail)</td>
+					<td colspan = "3">
+						<input type = "text" name=user_email1 id=user_email1 value = <%=email1%>>@<input type = "text" name=user_email2 id=user_email2 value = <%=email2%>>
+						<select name = "select_email" onchange="selectEmail();">
+							<option value = "1">직접입력</option>
+							<option value = "naver.com">naver.com</option>
+							<option value = "gmail.com">gmail.com</option>
+							<option value = "daum.net">daum.net</option>
+						</select>
+					</td>
+				</tr>
+					<tr>
+						<td><input type = "checkbox" name = "emailsts" value = "Y"  id="emailsts" <%if(emailsts_YN.equals("Y")) {%>checked<%} %>>
+						<input type="hidden" name="emailsts" value='N' id="emailsts_hidden">
+						쇼핑몰에서 발송하는 e-mail을 수신합니다.</td>
+					</tr>
+				<tr>
+					<td rowspan = "4" class = "title">주소</td>
+					<td colspan = "3" class = "addr">우편번호<br>
+						<input type = "text" name=zipcode id=zipcode value=<%=DBzipcode%> class=addr>
+					</td>
+					
+				</tr>
+				<tr>
+					<td colspan = "3" class = "addr">지번주소<br>
+						<input type = "text" name=lot_addr id=lot_addr value=<%=DBlot_addr%> class=addr>
+					</td>
+				</tr>
+				<tr>
+					<td colspan = "3" class = "addr">도로명주소<br>
+						<input type = "text" name=road_addr id=road_addr value=<%=DBroad_addr%> class=addr>
+					</td>
+				</tr>
+				<tr>
+					<td colspan = "3" class = "addr">나머지주소<br>
+						<input type = "text" name=rest_addr id=rest_addr value=<%=DBrest_addr%> class=addr>
+						</td>
+				</tr>
+				<tr>
+					<td class = "title">가입날짜</td>
+					<td><input type = "text" id = "joindate" value = <%=joindate %> disabled></td>
+				</tr>
+			</table>
+			<input type = "submit" value = "수정" class = "submit">
+		</form>
+		
+		<button onclick = "location = 'delete.jsp'" id = "delete">회원탈퇴</button>
 	<%}%>
+	</div>
 </body>
 </html>
 

@@ -1,0 +1,46 @@
+@charset "UTF-8";
+
+body {
+	margin-left: 27px;
+}
+
+h1 {
+	font-size : 50px;
+	color : #576F72;
+}
+
+#main {
+    background: #7D9D9C;
+    color: white;
+    border: 1px solid gray;
+    font-size: 15px;
+    padding: 4px;
+    border-radius: 8px;
+}
+
+#list {
+	text-align : center;
+	margin-top: 18px;
+}
+
+#search {
+    color: #7D9D9C;
+    font-size: 20px;
+    font-weight: bolder;
+    padding-left: 5px;
+}
+
+#submit {
+	background: #E8DFCA;
+    font-size: 15px;
+    border: 1px solid;
+    padding-left: 5px;
+    margin-right: 3px;
+}
+
+.cond {
+	background: #E8DFCA;
+    padding-left: 5px;
+    padding-right: 5px;
+    width: 75px;
+}
