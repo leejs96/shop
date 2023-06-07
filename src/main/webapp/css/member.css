@@ -3,7 +3,7 @@
 body {
 	min-width: 1340px;
 	display: block;
-    margin: 8px;
+    margin: 15px;
 }
 
 .wrap {
@@ -29,6 +29,7 @@ td {
 	padding-left: 7px;
 }
 
+
 .title {
 	text-align: right;
     background: #E8DFCA;
@@ -46,7 +47,12 @@ td {
 }
 
 .addr {
-	width : 500px;
+	width : 350px;
+}
+
+.addrTitle {
+	width : 95px;
+	background: #F0EBE3;
 }
 
 .submit {

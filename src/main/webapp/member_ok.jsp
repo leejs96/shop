@@ -9,7 +9,6 @@
 		<title>Insert title here</title>
 	</head>
 	<body>
-		<h1>회원가입 완료</h1>
 		<%
 		String user_id=request.getParameter("user_id");
 		String pw=request.getParameter("user_pw");

@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <%@ include file="./dbconn.jsp" %>
 <link rel="stylesheet" href = "./css/member.css?after">
-<title>Insert title here</title>
+<title>정보페이지</title>
 
 <script>
 function check_pw(pw1, pw2) {
@@ -55,10 +55,10 @@ function check_email(email1, email2) { // 이메일체크
 		}
 }
 
-function check_address(addr1, addr2, addr3, addr4) {
+function check_address(addr1, addr2, addr3) {
 	var regex = /^[0-9]+$/;
 	if (regex.test(addr1) && addr1.length > 0) {
-		if (addr2.length > 0 && addr3.length > 0 && addr4.length> 0) {
+		if (addr2.length > 0 && addr3.length > 0) {
 			return true;
 		} else {
 			alert('주소를 입력해주세요.');
@@ -83,14 +83,13 @@ function validateForm() {
 	var addr1 = document.my_info.zipcode.value;
 	var addr2 = document.my_info.lot_addr.value;
 	var addr3 = document.my_info.road_addr.value;
-	var addr4 = document.my_info.rest_addr.value;
 	   
 	if(check_pw(pw1, pw2)) {
 		if(check_hp(hp1, hp2, hp3))
 		{
 			if(check_email(email1, email2))
 			{
-					if(check_address(addr1, addr2, addr3, addr4))
+					if(check_address(addr1, addr2, addr3))
 					{
 						return true;
 					} else
@@ -116,7 +115,7 @@ function validateForm() {
 </head>
 
 <body>
-	<div style = "text-align: center; margin: 1% auto; padding-left: 25%; width : 605px;">
+	<div style = "text-align: center; margin: 1% auto; padding-left: 35%; width : 605px;">
 		<button onclick = "location = 'main.jsp'" class = "top">홈</button>
 		<button onclick = "location = 'logout.jsp'" class = "top">로그아웃</button>
 	</div>
@@ -155,27 +154,27 @@ function validateForm() {
 			String joindate = rs.getString("joindate");
 	%>
 	<div  class = "wrap">
-		<form name="my_info" action=update.jsp method=get onSubmit="return validateForm();">
+		<form name="my_info" action=update.jsp method=post onSubmit="return validateForm();">
 			<table border = "1">
 				<tr>
 					<td class = "title">아이디</td>
-					<td><input type = "text" name=user_id id=user_id value = <%=member_id%> disabled></td>
+					<td colspan = "2"><input type = "text" name=user_id id=user_id value = <%=member_id%> disabled></td>
 				</tr>
 				<tr>
 					<td class = "title">비밀번호</td>
-					<td><input type = "password" name=user_pw id=user_pw></td>
+					<td colspan = "2"><input type = "password" name=user_pw id=user_pw></td>
 				</tr>
 				<tr>
 					<td class = "title">비밀번호 확인</td>
-					<td><input type = "password" name=user_pw_ch id=user_pw_ch></td>
+					<td colspan = "2"><input type = "password" name=user_pw_ch id=user_pw_ch></td>
 				</tr>
 				<tr>
 					<td class = "title">이름</td>
-					<td><input type = "text" name=user_name id=user_name value=<%=name%> disabled></td>
+					<td colspan = "2"><input type = "text" name=user_name id=user_name value=<%=name%> disabled></td>
 				</tr>
 				<tr>
 					<td class = "title">성별</td>
-					<td>
+					<td colspan = "2">
 						<input type = "radio" name = "gender" value = "male" 
 						<%if(gender.equals("male")) out.print("checked");%>
 						>남자
@@ -198,7 +197,7 @@ function validateForm() {
 					</td>
 				</tr>
 				<tr>
-					<td>
+					<td colspan = "2">
 						<input type = "checkbox" name = "sms" value='Y' id="sms" <%if(SMS_YN.equals("Y")) {%>checked<%} %>>
 						<input type="hidden" name="sms" value='N' id="sms_hidden">
 						쇼핑몰에서 발송하는 SMS 소식을 수신합니다.
@@ -217,35 +216,39 @@ function validateForm() {
 					</td>
 				</tr>
 					<tr>
-						<td><input type = "checkbox" name = "emailsts" value = "Y"  id="emailsts" <%if(emailsts_YN.equals("Y")) {%>checked<%} %>>
+						<td colspan = "2"><input type = "checkbox" name = "emailsts" value = "Y"  id="emailsts" <%if(emailsts_YN.equals("Y")) {%>checked<%} %>>
 						<input type="hidden" name="emailsts" value='N' id="emailsts_hidden">
 						쇼핑몰에서 발송하는 e-mail을 수신합니다.</td>
 					</tr>
 				<tr>
 					<td rowspan = "4" class = "title">주소</td>
-					<td colspan = "3" class = "addr">우편번호<br>
+					<td class = "addrTitle">우편번호</td>
+					<td colspan = "2" class = "addr">
 						<input type = "text" name=zipcode id=zipcode value=<%=DBzipcode%> class=addr>
 					</td>
 					
 				</tr>
 				<tr>
-					<td colspan = "3" class = "addr">지번주소<br>
+					<td class = "addrTitle">지번주소</td>
+					<td colspan = "2" class = "addr">
 						<input type = "text" name=lot_addr id=lot_addr value=<%=DBlot_addr%> class=addr>
 					</td>
 				</tr>
 				<tr>
-					<td colspan = "3" class = "addr">도로명주소<br>
+					<td class = "addrTitle">도로명주소</td>
+					<td colspan = "2" class = "addr">
 						<input type = "text" name=road_addr id=road_addr value=<%=DBroad_addr%> class=addr>
 					</td>
 				</tr>
 				<tr>
-					<td colspan = "3" class = "addr">나머지주소<br>
+					<td class = "addrTitle">나머지주소</td>
+					<td colspan = "2"  class = "addr">
 						<input type = "text" name=rest_addr id=rest_addr value=<%=DBrest_addr%> class=addr>
-						</td>
+					</td>
 				</tr>
 				<tr>
 					<td class = "title">가입날짜</td>
-					<td><input type = "text" id = "joindate" value = <%=joindate %> disabled></td>
+					<td colspan = "2"><input type = "text" id = "joindate" value = <%=joindate %> disabled></td>
 				</tr>
 			</table>
 			<input type = "submit" value = "수정" class = "submit">

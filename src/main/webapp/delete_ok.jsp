@@ -27,11 +27,6 @@
 			DBpw = rs.getString("member_pw");
 		}
 		
-	%>
-		<script>
-			alert("DBpw : " + <%=DBpw%> + " pw : " + <%=pw%>);
-		</script>
-	<%
 		if(!DBpw.equals(pw)) {
 	%>
 			<script>

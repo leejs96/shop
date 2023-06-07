@@ -1,13 +1,16 @@
 @charset "UTF-8";
 
 body {
-	margin-left: 27px;
+	min-width: 1340px;
+	display: block;
+    margin: 15px;
 }
 
 h1 {
 	font-size : 50px;
 	color : #576F72;
 }
+
 
 #main {
     background: #7D9D9C;
@@ -20,12 +23,12 @@ h1 {
 
 #list {
 	text-align : center;
-	margin-top: 18px;
+	margin-top: 7px;
 }
 
 #search {
     color: #7D9D9C;
-    font-size: 20px;
+    font-size: 25px;
     font-weight: bolder;
     padding-left: 5px;
 }
@@ -36,6 +39,10 @@ h1 {
     border: 1px solid;
     padding-left: 5px;
     margin-right: 3px;
+}
+
+td {
+	padding: 3px 8px;
 }
 
 .cond {

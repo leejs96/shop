@@ -5,8 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <%@ include file="./dbconn.jsp" %>
-<title>Insert title here</title>
-<link rel="stylesheet" href = "./css/mem_list.css">
+<title>회원리스트</title>
+<link rel="stylesheet" href = "./css/mem_list.css?after">
 
 <script>
 	function validateForm() {
@@ -30,7 +30,7 @@
 			<tr><td id = "search" colspan = "2">검색조건</td></tr>
 			<tr>
 				<td colspan = "2">
-					<select name = "opt" id = "opt" style = "width: 83px;">
+					<select name = "opt" id = "opt" style = "width: 77px;">
 						<option value = "1">항목</option>
 						<option value = "member_id">ID</option>
 						<option value = "member_name">이름</option>
@@ -38,7 +38,7 @@
 						<option value = "road_addr">도로명주소</option>
 					</select>
 					<input type = "text" name = "search">
-					<input type = "submit" id = "submit">
+					<input type = "submit" id = "submit" value = "검색">
 				</td>
 			</tr>
 			<tr>
@@ -64,6 +64,9 @@
 			</tr>
 		</table>
 	</form>
+	<div style = "margin-top: 20px;">
+		<button onclick = "location = 'member_list.jsp'">전체 리스트보기</button>
+	</div>
 	<table border = "1" id = "list">
 		<!-- <colgroup>
 			<col width = "8%">
@@ -81,6 +84,7 @@
 			<col width = "8%">
 		</colgroup> -->
 		<tr style = "background: #7D9D9C; color: white;">
+			<td>num</td>
 			<td>ID</td>
 			<td>이름</td>
 			<td>성별</td>
@@ -94,9 +98,11 @@
 			<td>도로명주소</td>
 			<td>나머지주소</td>
 			<td>가입날짜</td>
+			<td>회원삭제</td>
 		</tr>
 		
 		<%
+		int i = 1;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
@@ -131,6 +137,7 @@
 			
 		%>
 			<tr>
+				<td><%=i%></td>
 				<td><%=member_id%></td>
 				<td><%=name %></td>
 				<td><%=gender %></td>
@@ -144,11 +151,20 @@
 				<td><%=DBroad_addr%></td>
 				<td><%=DBrest_addr%></td>
 				<td><%=joindate%></td>
+				<td><button id = <%=member_id%> onclick = "mem_delete(this.id);">삭제</button></td>
 			</tr>
+			
 		<%
+			i++;
 			}
 		%>
 		</table>
 	</body>
 </html>
 
+<script>
+	function mem_delete(id) {
+		alert(id + "행");
+		location.href="admin_delete.jsp?target=" + id;
+	}
+</script>

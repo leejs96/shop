@@ -10,7 +10,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>정보 업데이트</h1>
 	<%
 		String user_id = (String)session.getAttribute("member_id");		
 	
