@@ -23,7 +23,7 @@
 		%>
 		<button onclick = "location = 'login.jsp'" id = "main">홈</button>
 		<h1>회원리스트</h1>
-		<form name="SearchForm" action=member_list_ok.jsp method=get onSubmit="return validateForm();" style = "margin : 5px;">
+		<form name="SearchForm" action=memberlist_search.jsp method=get onSubmit="return validateForm();" style = "margin : 5px;">
 			<table>
 				<tr><td id = "search" colspan = "2">검색조건</td></tr>
 				<tr>
@@ -32,6 +32,7 @@
 							<option value = "1">항목</option>
 							<option value = "member_id"<% if(opt.equals("member_id")){%> selected<%}%>>ID</option>
 							<option value = "member_name"<% if(opt.equals("member_name")){%> selected<%}%>>이름</option>
+							<option value = "zipcode"<% if(opt.equals("zipcode")){%> selected<%}%>>우편번호</option>
 							<option value = "lot_addr"<% if(opt.equals("lot_addr")){%> selected<%}%>>지번주소</option>
 							<option value = "road_addr"<% if(opt.equals("road_addr")){%> selected<%}%>>도로명주소</option>
 						</select>
@@ -64,10 +65,11 @@
 			</form>
 			
 			<div style = "margin-top: 20px;">
-				<button onclick = "location = 'member_list.jsp'">전체 리스트보기</button>
+				<button onclick = "location = 'memberlist.jsp'">전체 리스트보기</button>
 			</div>
 			<table border = "1" id = "list">
 			<tr style = "background: #7D9D9C; color: white;">
+				<td>num</td>
 				<td>ID</td>
 				<td>이름</td>
 				<td>성별</td>
@@ -85,6 +87,7 @@
 			</tr>
 			<% 
 				int count = 0;
+				int i = 1;
 				
 				PreparedStatement pstmt = null;
 				ResultSet rs = null;
@@ -120,8 +123,11 @@
 					sql += "and emailsts_YN = 'N'";
 				}else{
 				}
+				
+				sql += "ORDER BY member_id ASC";
 				pstmt = conn.prepareStatement(sql);
 				rs = pstmt.executeQuery();
+				
 				
 				while (rs.next()) {
 					count++;
@@ -147,6 +153,7 @@
 			%>
 	
 			<tr>
+				<td><%=i%></td>
 				<td><%=member_id%></td>
 				<td><%=name %></td>
 				<td><%=gender %></td>
@@ -163,6 +170,7 @@
 				<td><button id = <%=member_id%> onclick = "mem_delete(this.id);">삭제</button></td>
 			</tr>
 			<%
+				i++;
 				}
 				if(count == 0) {
 					out.print("검색결과가 없습니다.");
@@ -174,7 +182,10 @@
 
 <script>
 	function mem_delete(id) {
-		alert(id + "행");
-		location.href="admin_delete.jsp?target=" + id;
+		if (confirm(id + "님의 계정을 삭제하시겠습니까?") == true) {
+			location.href="memberlist_delete.jsp?target=" + id;
+		} else {
+			return false;
+		}
 	}
 </script>

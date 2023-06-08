@@ -13,19 +13,20 @@
 				var id_len = user_id.length;
 				
 				if(id_len>=5 && id_len <=8) {
-					
-				var regex = /^[A-Za-z0-9+]*$/;
+					var regex = /^[A-Za-z0-9+]*$/;
 					if (regex.test(user_id)) 
 					{ 
 						return true;
 					} else 
 					{
+						alert('영어와 숫자가 혼용된 아이디를 설정해주세요.');
 						document.Registform.user_id.focus();
 						return false;
 					}
 				}
 				else
 				{
+					alert('5~8자리 아이디를 설정해주세요.');
 					document.Registform.user_id.focus();
 					return false;
 				}
@@ -42,7 +43,7 @@
 					}
 				} else
 				{
-					alert('비밀번호를 입력해주세요.');
+					alert('4자리 이상의 비밀번호를 입력해주세요.');
 					document.Registform.user_pw.focus();
 					return false;
 				}
@@ -129,24 +130,16 @@
 			}
 			
 			function check_address(addr1, addr2, addr3) {
-				var regex = /^[0-9]+$/;
-				if (regex.test(addr1) && addr1.length > 0) {
-					if (addr2.length > 0 && addr3.length > 0) {
-						return true;
-					} else {
-						alert('주소를 입력해주세요.');
-						return false;
-					}
+				if (addr1.length > 0 && (addr2.length > 0 || addr3.length > 0)) {
+					return true;
 				} else {
-					alert('정확한 우편번호(숫자) 입력해주세요.');
+					alert('주소를 입력해주세요.');
 					return false;
 				}
 			}
 
 			function validateForm() {
-				//console.log('확인');
-		    	
-		    	/* if(document.getElementById("sms").checked){document.getElementById("input_no1").disabled = true;} */
+				console.log('확인');
 		    	
 		    	var user_id = document.Registform.user_id.value;
 		    	var pw1 = document.Registform.user_pw.value;
@@ -222,8 +215,19 @@
 		<div class = "wrap">
 			<h1>회원가입</h1>
 			<h2>필수입력사항</h2>
-			<form name="Registform" action=member_ok.jsp method=get onSubmit="return validateForm();">
+			<form name="Registform" action=join_ok.jsp method=post onSubmit="return validateForm();">
 				<table id = "joinT">
+					<!-- <tr>
+						<td class = "title" >부서</td>
+						<td colspan = "2">
+							<select name = "select_email" onchange="selectEmail();">
+								<option value = "1">직접입력 </option>
+								<option value = "10">인사</option>
+								<option value = "20">디자인</option>
+								<option value = "30">마케팅</option>
+							</select>
+						</td>
+					</tr> -->
 					<tr>
 						<td class = "title" >아이디</td>
 						<td colspan = "2">
@@ -286,19 +290,20 @@
 						<td rowspan = "8" class = "title">주소</td>
 						<td class = "addrTitle">우편번호</td>
 						<td class = "addr">
-							<input type = "text" name=zipcode>
+							<input type = "text" name=zipcode id = zipcode>
+							<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
 						</td>
 					</tr>
 					<tr>
 						<td class = "addrTitle">지번주소</td>
 						<td class = "addr">
-							<input type = "text" name=lot_addr class=addr>
+							<input type = "text" name=lot_addr class=addr id = lot_addr>
 						</td>
 					</tr>
 					<tr>
 						<td class = "addrTitle">도로명주소</td>
 						<td class = "addr">
-							<input type = "text" name=road_addr class=addr>
+							<input type = "text" name=road_addr class=addr id = road_addr>
 						</td>
 					</tr>
 					<tr>
@@ -312,6 +317,56 @@
 				<input type=submit value='회원 가입' class = "submit">
 			</form>
 		</div>
+		
+		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> <!-- 우편번호검색 -->
+		<script>
+			function sample6_execDaumPostcode() {
+			    new daum.Postcode({
+			        oncomplete: function(data) {
+			            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+			
+			            // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+			            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+			            var addr = ''; // 주소 변수
+			            var extraAddr = ''; // 참고항목 변수
+			
+			            //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+			            if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+			                addr = data.roadAddress;
+				            document.getElementById("road_addr").value = addr;
+			            } else { // 사용자가 지번 주소를 선택했을 경우(J)
+			                addr = data.jibunAddress;
+				            document.getElementById("lot_addr").value = addr;
+			            }
+			            document.getElementById('zipcode').value = data.zonecode;
+			        }
+			    }).open();
+			}
+		</script>
+		
+		<%-- <script>
+			function id_doublecheck() { // 아이디 중복확인 만들기부터 시작
+		 		var id =  document.Registform.user_id.value;
+				<%
+			 	PreparedStatement pstmt = null;
+				ResultSet rs = null;
+				
+				String sql = "SELECT count(*) as cnt FROM shopping_member WHERE member_id = '"%>id<%"'";
+				pstmt = conn.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()){
+					int cnt = rs.getInt("cnt");
+					out.print(rs.getString("cnt"));
+					if (cnt != 0) {%>
+						alert("사용할 수 없는 ID입니다.");
+					<%} else{%>
+						alert("사용할 수 있는 ID입니다.");
+					<%}
+				}
+				%>
+			}
+		</script> --%>
 	</body>
 </html>
 
@@ -326,31 +381,4 @@
 			document.Registform.user_email2.value = document.Registform.select_email.value;
 		}
 	}
-
-	<%-- function id_doublecheck(id) { // 아이디 중복확인 만들기부터 시작
- 		var id =  document.Registform.user_id.value;
- 
-		<%
-	 	PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		
-		String sql = "SELECT count(*) as cnt FROM shopping_member WHERE member_id = '" + id + "'";
-		pstmt = conn.prepareStatement(sql);
-		rs = pstmt.executeQuery();
-		
-		if(rs.next()){
-			String cnt = rs.getString("cnt");
-			out.print(rs.getString("cnt"));
-			if (!cnt.equals("0")) {%>
-				alert("사용할 수 없는 ID입니다.");
-			<%} else{%>
-				alert("사용할 수 있는 ID입니다.");
-			<%}
-		}
-		%>
-	} --%>
 </script>
-	<!-- function mem_delete(id) {
-		alert(id + "행");
-		location.href="admin_delete.jsp?target=" + id;
-	 }-->

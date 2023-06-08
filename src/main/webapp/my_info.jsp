@@ -56,16 +56,10 @@ function check_email(email1, email2) { // 이메일체크
 }
 
 function check_address(addr1, addr2, addr3) {
-	var regex = /^[0-9]+$/;
-	if (regex.test(addr1) && addr1.length > 0) {
-		if (addr2.length > 0 && addr3.length > 0) {
-			return true;
-		} else {
-			alert('주소를 입력해주세요.');
-			return false;
-		}
+	if (addr1.length > 0 && (addr2.length > 0 || addr3.length > 0)) {
+		return true;
 	} else {
-		alert('정확한 우편번호(숫자) 입력해주세요.');
+		alert('주소를 입력해주세요.');
 		return false;
 	}
 }
@@ -154,7 +148,7 @@ function validateForm() {
 			String joindate = rs.getString("joindate");
 	%>
 	<div  class = "wrap">
-		<form name="my_info" action=update.jsp method=post onSubmit="return validateForm();">
+		<form name="my_info" action=info_update.jsp method=post onSubmit="return validateForm();">
 			<table border = "1">
 				<tr>
 					<td class = "title">아이디</td>

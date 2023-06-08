@@ -11,6 +11,7 @@
 </head>
 <body>
 	<%
+		request.setCharacterEncoding("UTF-8");
 		String user_id = (String)session.getAttribute("member_id");		
 	
 		String user_pw=request.getParameter("user_pw");

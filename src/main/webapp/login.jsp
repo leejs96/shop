@@ -10,7 +10,7 @@
 </head>
 <body>
 	<div id = "page">
-		<form name="loginform" action=login_ok.jsp method=get onSubmit="return login();">
+		<form name="loginform" action=login_ok.jsp method=post onSubmit="return login();">
 			<table>
 				<tr>
 					<td><input type = "text" name = "user_id" class = "user" placeholder = "ID"></td>
@@ -23,7 +23,7 @@
 				</tr>
 			</table>
 		</form>
-		<button id = "button" onclick = "location = 'member.jsp'" style = "">회원가입</button>
+		<button id = "button" onclick = "location = 'join.jsp'" style = "">회원가입</button>
 		<br>
 
 		<div id = "manage">
@@ -57,7 +57,7 @@
 		var manage_code = "0000";
 		var manage_num = document.getElementById("manage_num").value;
 		if(manage_num==manage_code) {
-			window.location.href="./member_list.jsp";
+			window.location.href="./memberlist.jsp";
 		} else {
 			alert("관리자번호를 입력하세요.");
 			return false;

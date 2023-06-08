@@ -11,7 +11,7 @@
 	<h1>계정삭제</h1>
 	<%String user_id = (String)session.getAttribute("member_id");%>
 	<p><%=user_id%>님, 계정을 지우시겠습니까??</p>
-	<form name="delete" action=delete_ok.jsp method=get onSubmit="return check();" style = "margin-left : 40px;">
+	<form name="delete" action=delete_ok.jsp method=post onSubmit="return check();" style = "margin-left : 40px;">
 		<table style = "border: 1px solid black;">
 			<tr>
 				<td style = "width : 115px; padding-right: 0;;">계정삭제 이유</td>

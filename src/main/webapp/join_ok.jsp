@@ -10,6 +10,7 @@
 	</head>
 	<body>
 		<%
+		request.setCharacterEncoding("UTF-8"); // post방식 사용시 한글 깨짐 방지
 		String user_id=request.getParameter("user_id");
 		String pw=request.getParameter("user_pw");
 		String name=request.getParameter("user_name");
