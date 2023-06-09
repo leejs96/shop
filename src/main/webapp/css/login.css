@@ -45,7 +45,8 @@ table {
 	margin-top: 3%;
     width: 220px;
     height: 33px;
-    background: #576F72;
+    /* background: #576F72; */
+    background: #8294C4;
     border: 0;
     color: white;
     font-size: large;
@@ -55,7 +56,8 @@ table {
 	margin: 0 20.5%;
     width: 220px;
     height: 33px;
-    background: #7D9D9C;
+    /* background: #7D9D9C; */
+    background: #ACB1D6;
     border: 0;
     color: white;
     font-size: large;

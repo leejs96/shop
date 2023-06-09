@@ -16,7 +16,7 @@ body {
 
 h1 {
 	font-size : 50px;
-	color : #576F72;
+	color : #526D82;
 }
 
 table {
@@ -32,7 +32,7 @@ td {
 
 .title {
 	text-align: right;
-    background: #E8DFCA;
+    background: #EEEEEE;
     border: 1px solid gray;
     font-weight: bolder;
     padding-right: 7px;
@@ -52,13 +52,13 @@ td {
 
 .addrTitle {
 	width : 95px;
-	background: #F0EBE3;
+	background: #F7F1E5;
 }
 
 .submit {
     width: 130px;
     height: 29px;
-    background: #7D9D9C;
+    background: #526D82;
     border: 1px solid gray;
     color: white;
     font-size: 16px;

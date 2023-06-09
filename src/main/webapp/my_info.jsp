@@ -5,11 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <%@ include file="./dbconn.jsp" %>
-<link rel="stylesheet" href = "./css/member.css?after">
+<link rel="stylesheet" href = "./css/member.css">
 <title>정보페이지</title>
 
 <script>
-function check_pw(pw1, pw2) {
+/* function check_pw(pw1, pw2) {
 	if(pw1.length >= 4)
 	{
 		if(pw1==pw2) {
@@ -23,6 +23,17 @@ function check_pw(pw1, pw2) {
 		alert('4자리 이상의 비밀번호를 입력해주세요.');
 		document.my_info.user_pw.focus();
 		return false;
+	}
+} */
+
+function check_dept(dept) {
+	if(dept == "1")
+	{
+		alert('부서를 선택해주세요.');
+		return false;
+	} else
+	{
+		return true;
 	}
 }
 
@@ -67,8 +78,7 @@ function check_address(addr1, addr2, addr3) {
 function validateForm() {
 	/* console.log('확인'); */
 	
-	var pw1 = document.my_info.user_pw.value;
-	var pw2 = document.my_info.user_pw.value;
+	var dept = document.my_info.select_dept.value;
 	var hp1 = document.my_info.user_hp1.value;
 	var hp2 = document.my_info.user_hp2.value;
 	var hp3 = document.my_info.user_hp3.value;
@@ -78,9 +88,8 @@ function validateForm() {
 	var addr2 = document.my_info.lot_addr.value;
 	var addr3 = document.my_info.road_addr.value;
 	   
-	if(check_pw(pw1, pw2)) {
-		if(check_hp(hp1, hp2, hp3))
-		{
+	if(check_dept(dept)) {
+		if(check_pw(pw1, pw2)) {
 			if(check_email(email1, email2))
 			{
 					if(check_address(addr1, addr2, addr3))
@@ -129,6 +138,7 @@ function validateForm() {
 			String member_id = rs.getString("member_id");
 			String pw = rs.getString("member_pw");
 			String name = rs.getString("member_name");
+			String dept = rs.getString("dept_No");
 			String gender = rs.getString("member_gender");
 			String birth_y = rs.getString("member_birth_y");
 			String birth_m = rs.getString("member_birth_m");
@@ -147,8 +157,35 @@ function validateForm() {
 			String DBrest_addr = rs.getString("rest_addr");
 			String joindate = rs.getString("joindate");
 	%>
+	
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> <!-- 우편번호검색 -->
+	<script>
+		function sample6_execDaumPostcode() {
+		    new daum.Postcode({
+		        oncomplete: function(data) {
+		            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+		
+		            // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+		            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+		            var addr = ''; // 주소 변수
+		            var extraAddr = ''; // 참고항목 변수
+		
+		            //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+		            if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+		                addr = data.roadAddress;
+			            document.getElementById("road_addr").value = addr;
+		            } else { // 사용자가 지번 주소를 선택했을 경우(J)
+		                addr = data.jibunAddress;
+			            document.getElementById("lot_addr").value = addr;
+		            }
+		            document.getElementById('zipcode').value = data.zonecode;
+		        }
+		    }).open();
+		}
+	</script>
+		
 	<div  class = "wrap">
-		<form name="my_info" action=info_update.jsp method=post onSubmit="return validateForm();">
+		<form name="my_info" action=info_update.jsp method=get onSubmit="return validateForm();">
 			<table border = "1">
 				<tr>
 					<td class = "title">아이디</td>
@@ -156,15 +193,25 @@ function validateForm() {
 				</tr>
 				<tr>
 					<td class = "title">비밀번호</td>
-					<td colspan = "2"><input type = "password" name=user_pw id=user_pw></td>
-				</tr>
-				<tr>
-					<td class = "title">비밀번호 확인</td>
-					<td colspan = "2"><input type = "password" name=user_pw_ch id=user_pw_ch></td>
+					<td colspan = "2">
+						<input type = "password" name=user_pw id=user_pw disabled>
+						<input type="button" value="비밀번호 변경" onclick="change_pw()">
+					</td>
 				</tr>
 				<tr>
 					<td class = "title">이름</td>
 					<td colspan = "2"><input type = "text" name=user_name id=user_name value=<%=name%> disabled></td>
+				</tr>
+				<tr>
+					<td class = "title">부서명</td>
+					<td colspan = "2">
+						<select name = "select_dept">
+							<option value = "1">선택</option>
+							<option value = "10" <%if(dept.equals("10")) {%>selected<%} %>>인사팀</option>
+							<option value = "20" <%if(dept.equals("20")) {%>selected<%} %>>재무팀</option>
+							<option value = "30" <%if(dept.equals("30")) {%>selected<%} %>>기획팀</option>
+						</select>
+					</td>
 				</tr>
 				<tr>
 					<td class = "title">성별</td>
@@ -217,27 +264,27 @@ function validateForm() {
 				<tr>
 					<td rowspan = "4" class = "title">주소</td>
 					<td class = "addrTitle">우편번호</td>
-					<td colspan = "2" class = "addr">
-						<input type = "text" name=zipcode id=zipcode value=<%=DBzipcode%> class=addr>
+					<td class = "addr">
+						<input type = "text" name=zipcode id=zipcode value=<%=DBzipcode%>>
+						<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
 					</td>
-					
 				</tr>
 				<tr>
 					<td class = "addrTitle">지번주소</td>
-					<td colspan = "2" class = "addr">
-						<input type = "text" name=lot_addr id=lot_addr value=<%=DBlot_addr%> class=addr>
+					<td class = "addr">
+						<input type = "text" name=lot_addr id=lot_addr style = "width: 300px;" value=<%=DBlot_addr%>>
 					</td>
 				</tr>
 				<tr>
 					<td class = "addrTitle">도로명주소</td>
-					<td colspan = "2" class = "addr">
-						<input type = "text" name=road_addr id=road_addr value=<%=DBroad_addr%> class=addr>
+					<td class = "addr">
+						<input type = "text" name=road_addr id=road_addr style = "width: 300px;" value=<%=DBroad_addr%>>
 					</td>
 				</tr>
 				<tr>
 					<td class = "addrTitle">나머지주소</td>
-					<td colspan = "2"  class = "addr">
-						<input type = "text" name=rest_addr id=rest_addr value=<%=DBrest_addr%> class=addr>
+					<td class = "addr">
+						<input type = "text" name=rest_addr id=rest_addr style = "width: 300px;" value=<%=DBrest_addr%>>
 					</td>
 				</tr>
 				<tr>
@@ -251,18 +298,50 @@ function validateForm() {
 		<button onclick = "location = 'delete.jsp'" id = "delete">회원탈퇴</button>
 	<%}%>
 	</div>
+	
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> <!-- 우편번호검색 -->
+	<script>
+		function sample6_execDaumPostcode() {
+		    new daum.Postcode({
+		        oncomplete: function(data) {
+		            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+		
+		            // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+		            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+		            var addr = ''; // 주소 변수
+		            var extraAddr = ''; // 참고항목 변수
+		
+		            //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+		            if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+		                addr = data.roadAddress;
+			            document.getElementById("road_addr").value = addr;
+		            } else { // 사용자가 지번 주소를 선택했을 경우(J)
+		                addr = data.jibunAddress;
+			            document.getElementById("lot_addr").value = addr;
+		            }
+		            document.getElementById('zipcode').value = data.zonecode;
+		        }
+		    }).open();
+		}
+	</script>
+	
 </body>
 </html>
 
 <script>
-function selectEmail() {
-	var select_email = document.Registform.select_email.value;
-	
-	if (select_email == "1") {
-		document.Registform.user_email2.value = "";
-		document.Registform.user_email2.focus();
-	} else {
-		document.Registform.user_email2.value = document.Registform.select_email.value;
+	function selectEmail() {
+		var select_email = document.Registform.select_email.value;
+		
+		if (select_email == "1") {
+			document.Registform.user_email2.value = "";
+			document.Registform.user_email2.focus();
+		} else {
+			document.Registform.user_email2.value = document.Registform.select_email.value;
+		}
 	}
-}
+	
+	function change_pw() {
+		window.open("http://localhost:8060/web02/Change_pw.jsp", "name(about:blank)", "width=500, height=500, fullscreen =yes ,scrollbars=no titlebar=no, resizable=NO, location='no'");
+	}
+
 </script>

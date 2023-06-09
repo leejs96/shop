@@ -13,6 +13,7 @@
 		request.setCharacterEncoding("UTF-8"); // post방식 사용시 한글 깨짐 방지
 		String user_id=request.getParameter("user_id");
 		String pw=request.getParameter("user_pw");
+		String dept=request.getParameter("select_dept");
 		String name=request.getParameter("user_name");
 		String gender=request.getParameter("gender");
 		String birth_y=request.getParameter("user_birth_y");
@@ -35,7 +36,7 @@
 		
 		PreparedStatement pstmt = null;
 		
-		String sql = "INSERT INTO shopping_member(member_id, member_pw, member_name, member_gender, member_birth_y, member_birth_m, member_birth_d, member_birth_gn, HP1, HP2, HP3, SMS_YN, email1, email2, emailsts_YN, zipcode, lot_addr, road_addr, rest_addr)" + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO shopping_member(member_id, member_pw, member_name, member_gender, member_birth_y, member_birth_m, member_birth_d, member_birth_gn, HP1, HP2, HP3, SMS_YN, email1, email2, emailsts_YN, zipcode, lot_addr, road_addr, rest_addr, dept_No)" + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		pstmt = conn.prepareStatement(sql);
 	
 		pstmt.setString(1, user_id);
@@ -57,6 +58,7 @@
 		pstmt.setString(17, lot_addr);
 		pstmt.setString(18, road_addr);
 		pstmt.setString(19, rest_addr);
+		pstmt.setString(20, dept);
 		
 		out.print(sql);
 		pstmt.executeUpdate();

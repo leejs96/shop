@@ -71,6 +71,17 @@
 				}
 			}
 			
+			function check_dept(dept) {
+				if(dept == "1")
+				{
+					alert('부서를 선택해주세요.');
+					return false;
+				} else
+				{
+					return true;
+				}
+			}
+			
 			function check_gender(gender) { //성별체크
 				if(gender == "male" || gender == "female")
 				{
@@ -145,6 +156,7 @@
 		    	var pw1 = document.Registform.user_pw.value;
 		    	var pw2 = document.Registform.user_pw_ch.value;
 		    	var user_name = document.Registform.user_name.value;
+		    	var dept = document.Registform.select_dept.value;
 		    	var gender = document.Registform.gender.value;
 		    	var Y = document.Registform.user_birth_y.value;
 		    	var M = document.Registform.user_birth_m.value;
@@ -165,39 +177,45 @@
 		    		{
 		    			if (check_name(user_name)) 
 		    			{
-		    				if(check_gender(gender))
-		    				{
-		    					if(check_birth(Y, M, D, sl)) 
-	    						{
-				    				if(check_hp(hp1, hp2, hp3))
-				    				{
-				    					if(check_email(email1, email2))
-				    					{
-					    					if(check_address(addr1, addr2, addr3)) {
-				    							return true;
-					    					} else {
-					    						return false;
-					    					}
-			    						} else 
-			    						{
-						    				return false;
-			    						}
-			    					} else 
-				    				{
+		    				if (check_dept(dept)) 
+			    				{
+			    				if(check_gender(gender))
+			    				{
+			    					if(check_birth(Y, M, D, sl)) 
+		    						{
+					    				if(check_hp(hp1, hp2, hp3))
+					    				{
+					    					if(check_email(email1, email2))
+					    					{
+						    					if(check_address(addr1, addr2, addr3)) {
+					    							return true;
+						    					} else {
+						    						return false;
+						    					}
+				    						} else 
+				    						{
+							    				return false;
+				    						}
+				    					} else 
+					    				{
+							    			return false;
+					    				}
+	    							} else 
+		    						{
 						    			return false;
-				    				}
-    							} else 
-	    						{
+		    						}
+		    					} else 
+			    				{
 					    			return false;
-	    						}
-	    					} else 
-		    				{
+			    				}
+		    				} else 
+			    			{
 				    			return false;
-		    				}
-	    				} else 
-		    			{
+			    			}
+			    		} else 
+			    		{
 			    			return false;
-		    			}
+			    		}
 		    		} else 
 		    		{
 		    			return false;
@@ -217,35 +235,35 @@
 			<h2>필수입력사항</h2>
 			<form name="Registform" action=join_ok.jsp method=post onSubmit="return validateForm();">
 				<table id = "joinT">
-					<!-- <tr>
-						<td class = "title" >부서</td>
-						<td colspan = "2">
-							<select name = "select_email" onchange="selectEmail();">
-								<option value = "1">직접입력 </option>
-								<option value = "10">인사</option>
-								<option value = "20">디자인</option>
-								<option value = "30">마케팅</option>
-							</select>
-						</td>
-					</tr> -->
 					<tr>
 						<td class = "title" >아이디</td>
 						<td colspan = "2">
 							<input type = "text" name=user_id id=user_id>
-							<button type = "button" onclick = "id_doublecheck();">중복확인</button>
+							<button type = "button" onclick = "check()">중복확인</button>
 						</td>
 					</tr>
 					<tr>
 						<td class = "title">비밀번호</td> 
-						<td colspan = "2"><input type = "password" name=user_pw id=user_pw></td>
+						<td colspan = "2"><input type = "password" name=user_pw id=user_pw value = "1111"></td>
 					</tr>
 					<tr>
 						<td class = "title">비밀번호 확인</td>
-						<td colspan = "2"><input type = "password" name=user_pw_ch id=user_pw_ch></td>
+						<td colspan = "2"><input type = "password" name=user_pw_ch id=user_pw_ch value = "1111"></td>
 					</tr>
 					<tr>
 						<td class = "title">이름</td>
 						<td colspan = "2"><input type = "text" name=user_name id=user_name></td>
+					</tr>
+					<tr>
+						<td class = "title">부서명</td>
+						<td colspan = "2">
+							<select name = "select_dept">
+								<option value = "1">선택</option>
+								<option value = "10">인사팀</option>
+								<option value = "20">재무팀</option>
+								<option value = "30">기획팀</option>
+							</select>
+						</td>
 					</tr>
 					<tr>
 						<td class = "title">성별</td>
@@ -257,14 +275,14 @@
 					<tr>
 						<td class = "title">법정생년월일</td>
 						<td colspan = "2">
-							<input type = "text" name=user_birth_y id=user_birth_y class = "birth">/<input type = "text" name=user_birth_m id=user_birth_m class = "birth">/<input type = "text" name=user_birth_d id=user_birth_d class = "birth">
+							<input type = "text" name=user_birth_y id=user_birth_y class = "birth" value = "1996">/<input type = "text" name=user_birth_m id=user_birth_m class = "birth" value = "01">/<input type = "text" name=user_birth_d id=user_birth_d class = "birth" value = "01">
 							<input type = "radio" name = "birth_SL" value = "양" checked>양력
 							<input type = "radio" name = "birth_SL" value = "음">음력
 						</td>
 					</tr>
 					<tr>
 						<td rowspan = "2" class = "title">휴대폰번호</td> 
-						<td colspan = "2" class = "hp"><input type = "text" name=user_hp1 class = "hp" id=user_hp1>-<input type = "text" name=user_hp2  class = "hp" id=user_hp2>-<input type = "text" name=user_hp3  class = "hp" id=user_hp3></td>
+						<td colspan = "2" class = "hp"><input type = "text" name=user_hp1 class = "hp" id=user_hp1 value = "010">-<input type = "text" name=user_hp2  class = "hp" id=user_hp2 value = "1111">-<input type = "text" name=user_hp3  class = "hp" id=user_hp3 value = "1111"></td>
 					</tr>
 					<tr>
 						<td colspan = "2">
@@ -273,7 +291,7 @@
 					</tr>
 					<tr>
 						<td rowspan = "2" class = "title">이메일<br>(e-mail)</td>
-						<td colspan = "2"><input type = "text" name=user_email1 id=user_email1>@<input type = "text" name=user_email2 id=user_email2>
+						<td colspan = "2"><input type = "text" name=user_email1 id=user_email1 value = "aaa">@<input type = "text" name=user_email2 id=user_email2 value="naver.com">
 							<select name = "select_email" onchange="selectEmail();">
 								<option value = "1">직접입력 </option>
 								<option value = "naver.com">naver.com</option>
@@ -290,26 +308,26 @@
 						<td rowspan = "8" class = "title">주소</td>
 						<td class = "addrTitle">우편번호</td>
 						<td class = "addr">
-							<input type = "text" name=zipcode id = zipcode>
+							<input type = "text" name=zipcode id = zipcode value = "13536">
 							<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
 						</td>
 					</tr>
 					<tr>
 						<td class = "addrTitle">지번주소</td>
 						<td class = "addr">
-							<input type = "text" name=lot_addr class=addr id = lot_addr>
+							<input type = "text" name=lot_addr id = lot_addr>
 						</td>
 					</tr>
 					<tr>
 						<td class = "addrTitle">도로명주소</td>
 						<td class = "addr">
-							<input type = "text" name=road_addr class=addr id = road_addr>
+							<input type = "text" name=road_addr id = road_addr value = "경기 성남시 분당구 판교역로10번길 3">
 						</td>
 					</tr>
 					<tr>
 						<td class = "addrTitle">나머지주소</td>
 						<td class = "addr">
-							<input type = "text" name=rest_addr class=addr>
+							<input type = "text" name=rest_addr>
 						</td>
 					</tr>
 				</table>
@@ -317,6 +335,30 @@
 				<input type=submit value='회원 가입' class = "submit">
 			</form>
 		</div>
+		
+		<!-- <script>
+			var check = function() {
+				var user_id = document.Registform.user_id.value;
+				PreparedStatement pstmt = null;
+				ResultSet rs = null;
+				
+				String sql = "SELECT count(*) as cnt FROM shopping_member WHERE member_id = '"user_id"'";
+				pstmt = conn.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()){
+					int cnt = rs.getInt("cnt");
+					out.print(rs.getString("cnt"));
+					if (cnt != 0) {
+						alert("사용할 수 없는 ID입니다.");
+					} else{
+						alert("사용할 수 있는 ID입니다.");
+					}
+				}
+				
+				alert(user_id);
+			}
+		</script> -->
 		
 		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> <!-- 우편번호검색 -->
 		<script>

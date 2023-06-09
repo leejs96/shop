@@ -34,11 +34,12 @@
 						<option value = "1">항목</option>
 						<option value = "member_id">ID</option>
 						<option value = "member_name">이름</option>
+						<option value = "dept_Name">부서명</option>
 						<option value = "zipcode">우편번호</option>
 						<option value = "lot_addr">지번주소</option>
 						<option value = "road_addr">도로명주소</option>
 					</select>
-					<input type = "text" name = "search">
+					<input type = "search" name = "search">
 					<input type = "submit" id = "submit" value = "검색">
 				</td>
 			</tr>
@@ -70,9 +71,10 @@
 	</div>
 	<table border = "1" id = "list">
 		<tr style = "background: #7D9D9C; color: white;">
-			<td>num</td>
+			<td>No</td>
 			<td>ID</td>
 			<td>이름</td>
+			<td>부서명</td>
 			<td>성별</td>
 			<td>생년월일</td>
 			<td>HP</td>
@@ -92,7 +94,7 @@
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String sql = "SELECT * FROM shopping_member ORDER BY member_id ASC";
+		String sql = "SELECT * FROM shopping_member INNER JOIN dept ON shopping_member.dept_No = dept.dept_No ORDER BY member_id ASC";
 		pstmt = conn.prepareStatement(sql);
 	
 		// 4) 실행
@@ -102,6 +104,7 @@
 		while (rs.next()) {
 			String member_id = rs.getString("member_id");
 			String name = rs.getString("member_name");
+			String dept = rs.getString("dept_Name");
 			String gender = rs.getString("member_gender");
 			String birth_y = rs.getString("member_birth_y");
 			String birth_m = rs.getString("member_birth_m");
@@ -126,6 +129,7 @@
 				<td><%=i%></td>
 				<td><%=member_id%></td>
 				<td><%=name %></td>
+				<td><%=dept %></td>
 				<td><%=gender %></td>
 				<td><%=birth_y%>/<%=birth_m%>/<%=birth_d%>(<%=birth_gn%>)</td>
 				<td><%=HP1%>-<%=HP2%>-<%=HP3%></td>
@@ -151,7 +155,15 @@
 <script>
 	function mem_delete(id) {
 		if (confirm(id + "님의 계정을 삭제하시겠습니까?") == true) {
-			location.href="memberlist_delete.jsp?target=" + id;
+			var manage_num = prompt("관리자 비밀번호를 입력해주세요.");
+	        if(manage_num == "0000") {
+				location.href="memberlist_delete.jsp?target=" + id;
+	        } else if(manage_num == null){
+				return false;
+	        } else {
+	        	alert("관리자비밀번호가 일치하지 않습니다.");
+				return false;
+			}
 		} else {
 			return false;
 		}
