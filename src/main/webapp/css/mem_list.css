@@ -1,17 +1,5 @@
 @charset "UTF-8";
 
-body {
-	min-width: 1340px;
-	display: block;
-    margin: 15px;
-}
-
-h1 {
-	font-size : 50px;
-	color : #576F72;
-}
-
-
 #main {
     background: #7D9D9C;
     color: white;
@@ -34,11 +22,23 @@ h1 {
 }
 
 #submit {
-	background: #E8DFCA;
+	background: #EEEEEE;
     font-size: 15px;
     border: 1px solid;
     padding-left: 5px;
     margin-right: 3px;
+    vertical-align: middle;
+    height: 25px;
+}
+
+#opt {
+	width: 85px;
+	height: 25px;
+}
+
+#search_con {
+    font-size: 15px;
+    margin: 5px 0 15px 26px;
 }
 
 td {
@@ -46,8 +46,9 @@ td {
 }
 
 .cond {
-	background: #E8DFCA;
+	background: #EEEEEE;
     padding-left: 5px;
     padding-right: 5px;
     width: 75px;
+    text-align: right;
 }

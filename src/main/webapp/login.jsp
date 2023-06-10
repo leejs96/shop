@@ -13,18 +13,17 @@
 		<form name="loginform" action=login_ok.jsp method=post onSubmit="return login();">
 			<table>
 				<tr>
-					<td><input type = "text" name = "user_id" class = "user" placeholder = "ID"></td>
+					<td colspan = "2"><input type = "text" name = "user_id" class = "user" placeholder = "ID"></td>
 				</tr>
 				<tr>
-					<td><input type = "password" name = "user_pw" class = "user" placeholder = "password"></td>
+					<td colspan = "2"><input type = "password" name = "user_pw" class = "user" placeholder = "PASSWORD"></td>
 				</tr>
 				<tr>
-					<td rowspan = "2"><input type = "submit" value = "로그인" id = "submit"></td>
+					<td><input type = "submit" value = "로그인" class = "submit"></td>
+					<td><input type = "button" class = "submit" onclick = "location = 'join.jsp'" value = 회원가입 style = "background: #ACB1D6;"></td>
 				</tr>
 			</table>
 		</form>
-		<button id = "button" onclick = "location = 'join.jsp'" style = "">회원가입</button>
-		<br>
 
 		<div id = "manage">
 			회원관리

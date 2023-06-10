@@ -3,14 +3,28 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	
 		<meta charset="UTF-8">
 		<%@ include file="./dbconn.jsp" %>
+		<link rel="stylesheet" href = "./css/nav.css">
 		<link rel="stylesheet" href = "./css/mem_list.css?after">
-	
 		<title>회원리스트</title>
 	</head>
+	
 	<body>
+		<div class = "navigation_bar">
+			<div class = "navigation_bar" style = "float : left;">
+				<ul class = "list">
+					<li class = "menu"><a href = "main.jsp">Home</a></li>
+				</ul>
+			</div>
+			<div class = "navigation_bar" style = "float : right;">
+				<ul class = "list">
+					<li class = "menu" style = "padding-right: 10px;"><a href = "memberlist.jsp">관리자 페이지</a></li>
+					<li class = "menu"><a href = "logout.jsp">로그아웃</a></li>
+				</ul>
+			</div>
+		</div>
+	
 		<%
 			String opt=request.getParameter("opt");
 			String search=request.getParameter("search") != null ? request.getParameter("search") : "";
@@ -21,26 +35,24 @@
 			String emailY=request.getParameter("emailY") != null ? request.getParameter("emailY") : "";
 			String emailN=request.getParameter("emailN") != null ? request.getParameter("emailN") : "";
 		%>
-		<button onclick = "location = 'login.jsp'" id = "main">홈</button>
+		<div class = "wrap">
 		<h1>회원리스트</h1>
-		<form name="SearchForm" action=memberlist_search.jsp method=get onSubmit="return validateForm();" style = "margin : 5px;">
-			<table>
-				<tr><td id = "search" colspan = "2">검색조건</td></tr>
-				<tr>
-					<td colspan = "2">
-						<select name = "opt" id = "opt" style = "width: 77px;">
-							<option value = "1">항목</option>
-							<option value = "member_id"<% if(opt.equals("member_id")){%> selected<%}%>>ID</option>
-							<option value = "member_name"<% if(opt.equals("member_name")){%> selected<%}%>>이름</option>
-							<option value = "dept_Name"<% if(opt.equals("dept_Name")){%> selected<%}%>>부서명</option>
-							<option value = "zipcode"<% if(opt.equals("zipcode")){%> selected<%}%>>우편번호</option>
-							<option value = "lot_addr"<% if(opt.equals("lot_addr")){%> selected<%}%>>지번주소</option>
-							<option value = "road_addr"<% if(opt.equals("road_addr")){%> selected<%}%>>도로명주소</option>
-						</select>
-						<input type = "search" name = "search" value = <%=search %>>
-						<input type = "submit"  id = "submit" value = "검색">
-					</td>
-				</tr>
+		<form name="SearchForm" action=memberlist_search.jsp method=get onSubmit="return validateForm();" style = "margin : 5px; border : 1px solid;">
+			<h2 style = "margin-left: 15px; margin-bottom: 10px;">검색조건</h2>
+			<div style = "margin-left: 28px;">
+				<select name = "opt" id = "opt">
+					<option value = "1">항목</option>
+					<option value = "member_id"<% if(opt.equals("member_id")){%> selected<%}%>>ID</option>
+					<option value = "member_name"<% if(opt.equals("member_name")){%> selected<%}%>>이름</option>
+					<option value = "dept_Name"<% if(opt.equals("dept_Name")){%> selected<%}%>>부서명</option>
+					<option value = "zipcode"<% if(opt.equals("zipcode")){%> selected<%}%>>우편번호</option>
+					<option value = "lot_addr"<% if(opt.equals("lot_addr")){%> selected<%}%>>지번주소</option>
+					<option value = "road_addr"<% if(opt.equals("road_addr")){%> selected<%}%>>도로명주소</option>
+				</select>
+				<input type = "search" name = "search" style = "height : 25px;" value = <%=search %>>
+				<input type = "submit"  id = "submit" value = "검색">
+			</div>
+			<table id = "search_con">
 				<tr>
 					<td class="cond">성별</td>
 					<td>
@@ -68,8 +80,9 @@
 			<div style = "margin-top: 20px;">
 				<button onclick = "location = 'memberlist.jsp'">전체 리스트보기</button>
 			</div>
+			
 			<table border = "1" id = "list">
-			<tr style = "background: #7D9D9C; color: white;">
+			<tr style = "background: #94AF9F">
 				<td>No</td>
 				<td>ID</td>
 				<td>이름</td>
@@ -187,6 +200,7 @@
 				}
 			%>
 		</table> 
+		</div>
 	</body>
 </html>
 

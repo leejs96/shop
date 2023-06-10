@@ -6,6 +6,7 @@
 		<%@ include file="./dbconn.jsp" %>
 		<meta charset="UTF-8">
 		<title>회원가입</title>
+		<link rel="stylesheet" href = "./css/nav.css">
 		<link rel="stylesheet" href = "./css/member.css">
 		
 		<script>
@@ -230,9 +231,21 @@
 	</head>
 	
 	<body>
-		<div class = "wrap">
+		<div class = "navigation_bar">
+			<div class = "navigation_bar" style = "float : left;">
+				<ul class = "list">
+					<li class = "menu"><a href = "main.jsp">Home</a></li>
+				</ul>
+			</div>
+			<div class = "navigation_bar" style = "float : right;">
+				<ul class = "list">
+					<li class = "menu"><a href = "login.jsp">로그인</a></li>
+				</ul>
+			</div>
+		</div>
+	
+		<div class = "wrap" style = "width: 615px;">
 			<h1>회원가입</h1>
-			<h2>필수입력사항</h2>
 			<form name="Registform" action=join_ok.jsp method=post onSubmit="return validateForm();">
 				<table id = "joinT">
 					<tr>
@@ -282,16 +295,20 @@
 					</tr>
 					<tr>
 						<td rowspan = "2" class = "title">휴대폰번호</td> 
-						<td colspan = "2" class = "hp"><input type = "text" name=user_hp1 class = "hp" id=user_hp1 value = "010">-<input type = "text" name=user_hp2  class = "hp" id=user_hp2 value = "1111">-<input type = "text" name=user_hp3  class = "hp" id=user_hp3 value = "1111"></td>
-					</tr>
-					<tr>
-						<td colspan = "2">
-							<input type = "checkbox" name = "sms" value = "Y" id = "sms">쇼핑몰에서 발송하는 SMS 소식을 수신합니다.
+						<td colspan = "2" class = "hp" style = "border: 0; padding-bottom: 0;">
+							<input type = "text" name=user_hp1 class = "hp" id=user_hp1 value = "010">-<input type = "text" name=user_hp2  class = "hp" id=user_hp2 value = "1111">-<input type = "text" name=user_hp3  class = "hp" id=user_hp3 value = "1111">
 						</td>
 					</tr>
 					<tr>
-						<td rowspan = "2" class = "title">이메일<br>(e-mail)</td>
-						<td colspan = "2"><input type = "text" name=user_email1 id=user_email1 value = "aaa">@<input type = "text" name=user_email2 id=user_email2 value="naver.com">
+						<td colspan = "2">
+							<input type = "checkbox" name = "sms" value = "Y" id = "sms">
+							쇼핑몰에서 발송하는 SMS 소식을 수신합니다.
+						</td>
+					</tr>
+					<tr>
+						<td rowspan = "2" class = "title">이메일(e-mail)</td>
+						<td colspan = "2" style = "border: 0; padding-bottom: 0;">
+							<input type = "text" name=user_email1 id=user_email1 value = "aaa">@<input type = "text" name=user_email2 id=user_email2 value="naver.com">
 							<select name = "select_email" onchange="selectEmail();">
 								<option value = "1">직접입력 </option>
 								<option value = "naver.com">naver.com</option>
@@ -301,8 +318,10 @@
 						</td>
 					</tr>
 					<tr>
-						<td colspan = "2"><input type = "checkbox" name = "emailsts" value = "Y" id = "emailsts">
-						쇼핑몰에서 발송하는 e-mail을 수신합니다.</td>
+						<td colspan = "2">
+							<input type = "checkbox" name = "emailsts" value = "Y" id = "emailsts">
+							쇼핑몰에서 발송하는 e-mail을 수신합니다.
+						</td>
 					</tr>
 					<tr>
 						<td rowspan = "8" class = "title">주소</td>
@@ -315,19 +334,19 @@
 					<tr>
 						<td class = "addrTitle">지번주소</td>
 						<td class = "addr">
-							<input type = "text" name=lot_addr id = lot_addr>
+							<input type = "text" name=lot_addr id = lot_addr style = "width: 85%;">
 						</td>
 					</tr>
 					<tr>
 						<td class = "addrTitle">도로명주소</td>
 						<td class = "addr">
-							<input type = "text" name=road_addr id = road_addr value = "경기 성남시 분당구 판교역로10번길 3">
+							<input type = "text" name=road_addr id = road_addr value = "경기 성남시 분당구 판교역로10번길 3" style = "width: 85%;">
 						</td>
 					</tr>
 					<tr>
 						<td class = "addrTitle">나머지주소</td>
 						<td class = "addr">
-							<input type = "text" name=rest_addr>
+							<input type = "text" name=rest_addr style = "width: 85%;">
 						</td>
 					</tr>
 				</table>
