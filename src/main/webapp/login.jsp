@@ -23,13 +23,14 @@
 					<td><input type = "button" class = "submit" onclick = "location = 'join.jsp'" value = 회원가입 style = "background: #ACB1D6;"></td>
 				</tr>
 			</table>
+		
+			<div id = "manage">
+				회원관리
+				<input type = "text" name = "manage_num" id = "manage_num" placeholder = "관리자번호">
+				<input type = "button" onclick = "manage();" value = "확인" style = "background-color: #E8E8E8; border: 1px solid #BBBFCA; height: 25px; vertical-align: middle;">
+			</div>
 		</form>
 
-		<div id = "manage">
-			회원관리
-			<input type = "text" name = "manage_num" id = "manage_num" placeholder = "관리자번호">
-			<button onclick = "manage();" style = "background-color: #E8E8E8; border: 1px solid #BBBFCA; height: 25px;">확인</button>
-		</div>
 	</div>
 </body>
 </html>
@@ -56,7 +57,8 @@
 		var manage_code = "0000";
 		var manage_num = document.getElementById("manage_num").value;
 		if(manage_num==manage_code) {
-			window.location.href="./memberlist.jsp";
+			/* window.location.href="./memberlist.jsp"; */
+			location.href="main.jsp?manage=" + manage_code;
 		} else {
 			alert("관리자번호를 입력하세요.");
 			return false;

@@ -8,7 +8,7 @@
 		<title>회원리스트</title>
 		
 		<link rel="stylesheet" href = "./css/nav.css">
-		<link rel="stylesheet" href = "./css/mem_list.css?after">
+		<link rel="stylesheet" href = "./css/mem_list.css?">
 	</head>
 	
 	<body>
@@ -20,14 +20,15 @@
 			</div>
 			<div class = "navigation_bar" style = "float : right;">
 				<ul class = "list">
-					<li class = "menu" style = "padding-right: 10px;"><a href = "memberlist.jsp">관리자 페이지</a></li>
+					<li class = "menu" style = "padding-right: 10px;"><a href = "dept.jsp">부서관리페이지</a></li>
+					<li class = "menu" style = "padding-right: 10px;"><a href = "memberlist.jsp">관리자페이지</a></li>
 					<li class = "menu"><a href = "logout.jsp">로그아웃</a></li>
 				</ul>
 			</div>
 		</div>
 	
 		<div class = "wrap">
-			<h1>회원리스트</h1>
+			<h1>회원관리</h1>
 			<form name="SearchForm" action=memberlist_search.jsp method=get style = "margin : 5px; border : 1px solid;">
 					<h2 style = "margin-left: 15px; margin-bottom: 10px;">검색조건</h2>
 					<div style = "margin-left: 28px;">
@@ -88,6 +89,7 @@
 					<td>도로명주소</td>
 					<td>나머지주소</td>
 					<td>가입날짜</td>
+					<td>정보수정</td>
 					<td>회원삭제</td>
 				</tr>
 				
@@ -143,6 +145,7 @@
 					<td><%=DBroad_addr%></td>
 					<td><%=DBrest_addr%></td>
 					<td><%=joindate%></td>
+					<td><button id = <%=member_id%> onclick = "mem_update(this.id);">수정</button></td>
 					<td><button id = <%=member_id%> onclick = "mem_delete(this.id);">삭제</button></td>
 				</tr>
 				
@@ -170,5 +173,8 @@
 		} else {
 			return false;
 		}
+	}
+	
+	function mem_update(id) {
 	}
 </script>

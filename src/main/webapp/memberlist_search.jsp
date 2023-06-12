@@ -19,7 +19,7 @@
 			</div>
 			<div class = "navigation_bar" style = "float : right;">
 				<ul class = "list">
-					<li class = "menu" style = "padding-right: 10px;"><a href = "memberlist.jsp">관리자 페이지</a></li>
+					<li class = "menu" style = "padding-right: 10px;"><a href = "memberlist.jsp">관리자페이지</a></li>
 					<li class = "menu"><a href = "logout.jsp">로그아웃</a></li>
 				</ul>
 			</div>
@@ -36,7 +36,7 @@
 			String emailN=request.getParameter("emailN") != null ? request.getParameter("emailN") : "";
 		%>
 		<div class = "wrap">
-		<h1>회원리스트</h1>
+		<h1>회원관리</h1>
 		<form name="SearchForm" action=memberlist_search.jsp method=get onSubmit="return validateForm();" style = "margin : 5px; border : 1px solid;">
 			<h2 style = "margin-left: 15px; margin-bottom: 10px;">검색조건</h2>
 			<div style = "margin-left: 28px;">

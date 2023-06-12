@@ -52,3 +52,7 @@ td {
     width: 75px;
     text-align: right;
 }
+
+#sub_nav {
+	display : none;
+}

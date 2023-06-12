@@ -252,7 +252,7 @@
 						<td class = "title" >아이디</td>
 						<td colspan = "2">
 							<input type = "text" name=user_id id=user_id>
-							<button type = "button" onclick = "check()">중복확인</button>
+							<button type = "button" onclick = "id_doublecheck()">중복확인</button>
 						</td>
 					</tr>
 					<tr>
@@ -355,30 +355,6 @@
 			</form>
 		</div>
 		
-		<!-- <script>
-			var check = function() {
-				var user_id = document.Registform.user_id.value;
-				PreparedStatement pstmt = null;
-				ResultSet rs = null;
-				
-				String sql = "SELECT count(*) as cnt FROM shopping_member WHERE member_id = '"user_id"'";
-				pstmt = conn.prepareStatement(sql);
-				rs = pstmt.executeQuery();
-				
-				if(rs.next()){
-					int cnt = rs.getInt("cnt");
-					out.print(rs.getString("cnt"));
-					if (cnt != 0) {
-						alert("사용할 수 없는 ID입니다.");
-					} else{
-						alert("사용할 수 있는 ID입니다.");
-					}
-				}
-				
-				alert(user_id);
-			}
-		</script> -->
-		
 		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> <!-- 우편번호검색 -->
 		<script>
 			function sample6_execDaumPostcode() {
@@ -405,29 +381,26 @@
 			}
 		</script>
 		
-		<%-- <script>
+		<script>
 			function id_doublecheck() { // 아이디 중복확인 만들기부터 시작
-		 		var id =  document.Registform.user_id.value;
 				<%
+				//var user_id = document.Registform.user_id.value;
+				/* location.href="join.jsp?id=" + user_id; */
 			 	PreparedStatement pstmt = null;
 				ResultSet rs = null;
 				
-				String sql = "SELECT count(*) as cnt FROM shopping_member WHERE member_id = '"%>id<%"'";
+				String sql = "SELECT count(*) as cnt FROM shopping_member WHERE member_id = '" + id + "'";
 				pstmt = conn.prepareStatement(sql);
 				rs = pstmt.executeQuery();
 				
 				if(rs.next()){
-					int cnt = rs.getInt("cnt");
-					out.print(rs.getString("cnt"));
-					if (cnt != 0) {%>
-						alert("사용할 수 없는 ID입니다.");
-					<%} else{%>
-						alert("사용할 수 있는 ID입니다.");
-					<%}
-				}
 				%>
+					alert("사용할 수 없는 ID입니다.");
+				<%} else{%>
+					alert("사용할 수 있는 ID입니다.");
+				<%}%>
 			}
-		</script> --%>
+		</script>
 	</body>
 </html>
 

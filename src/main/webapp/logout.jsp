@@ -15,6 +15,6 @@
 	function logout()	{
 		alert("로그아웃되었습니다.");
 		<%session.invalidate();%>
-		window.location.href="./login.jsp";
+		window.location.href="./main.jsp";
 	}
 </script>

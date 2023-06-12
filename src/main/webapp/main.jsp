@@ -9,6 +9,13 @@
 </head>
 
 <body>
+	<%
+		String manager = request.getParameter("manage");
+		if(manager != null) {
+			session.setAttribute("manager", manager);
+		}
+	%>
+	<%manager = (String)session.getAttribute("manager"); %>
 	<%String user_id = (String)session.getAttribute("member_id"); %>
 	<div class = "navigation_bar">
 		<div class = "navigation_bar" style = "float : left;">
@@ -18,7 +25,10 @@
 		</div>
 		<div class = "navigation_bar" style = "float : right;">
 			<ul class = "list">
-				<% if(user_id == null) {%>
+				<%if(manager != null) {%>
+						<li class = "menu" style = "padding-right: 10px;"><a href = "memberlist.jsp">관리자페이지</a></li>
+						<li class = "menu"><a href = "logout.jsp">로그아웃</a></li>
+				<%} else if(user_id == null) {%>
 						<li class = "menu"><a href = "login.jsp">로그인</a></li>
 				<%} else {%>
 						<li class = "menu" style = "padding-right: 10px;"><a href = "my_info.jsp">마이페이지</a></li>
