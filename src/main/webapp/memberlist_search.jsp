@@ -12,15 +12,17 @@
 	
 	<body>
 		<div class = "navigation_bar">
-			<div class = "navigation_bar" style = "float : left;">
+			<div class = "navigation_bar" id = "sub">
 				<ul class = "list">
-					<li class = "menu"><a href = "main.jsp">Home</a></li>
-				</ul>
-			</div>
-			<div class = "navigation_bar" style = "float : right;">
-				<ul class = "list">
-					<li class = "menu" style = "padding-right: 10px;"><a href = "memberlist.jsp">관리자페이지</a></li>
-					<li class = "menu"><a href = "logout.jsp">로그아웃</a></li>
+					<li class = "menu" style = "float : left;"><a href = "main.jsp">Home</a></li>
+					<li id = "logout"><a href = "logout.jsp">로그아웃</a></li>
+					<li class = "menu" style = "padding-right: 10px;">
+						<div class = "dropdown">관리자페이지</div>
+						<div class = "dropdown_menu">
+							<a href = "dept.jsp">부서관리</a>
+							<a href = "memberlist.jsp">회원관리</a>
+						</div>
+					</li>
 				</ul>
 			</div>
 		</div>

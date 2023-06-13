@@ -5,8 +5,8 @@
 	<head>
 		<meta charset="UTF-8">
 		<%@ include file="./dbconn.jsp" %>
-		<link rel="stylesheet" href = "./css/nav.css">
-		<link rel="stylesheet" href = "./css/mem_list.css?">
+		<link rel="stylesheet" href = "./css/nav.css?after">
+		<link rel="stylesheet" href = "./css/mem_list.css">
 		<title>Insert title here</title>
 		
 		<script>
@@ -39,25 +39,17 @@
 	
 	<body>
 		<div class = "navigation_bar">
-			<div class = "navigation_bar" style = "float : left;">
 				<ul class = "list">
-					<li class = "menu"><a href = "main.jsp">Home</a></li>
+					<li class = "menu" style = "float : left;"><a href = "main.jsp">Home</a></li>
+					<li id = "logout"><a href = "logout.jsp">로그아웃</a></li>
+					<li class = "menu" style = "padding-right: 10px;">
+						<div class = "dropdown">관리자페이지</div>
+						<div class = "dropdown_menu">
+							<a href = "dept.jsp">부서관리</a>
+							<a href = "memberlist.jsp">회원관리</a>
+						</div>
+					</li>
 				</ul>
-			</div>
-			<div class = "navigation_bar" id = "sub" style = "float : right;">
-				<div class = "menu2" style = "position : relative; display : inline-block;">
-					<ul class = "list">
-						<li class = "menu" style = "padding-right: 10px;"><a href = "memberlist.jsp">관리자페이지</a></li>
-							<div class = "sub_menu">
-								<ul>
-									<li><a href = "dept.jsp">부서관리</a></li>
-									<li><a href = "memberlist.jsp">회원관리</a></li>
-								</ul>
-							</div>
-						<li class = "menu"><a href = "logout.jsp">로그아웃</a></li>
-					</ul>
-				</div>
-			</div>
 		</div>
 			
 		<div class = "wrap">
