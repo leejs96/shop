@@ -4,9 +4,11 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<%@ include file="./dbconn.jsp" %>
-		<link rel="stylesheet" href = "./css/nav.css?after">
-		<link rel="stylesheet" href = "./css/mem_list.css">
+		<%@ include file="../script/dbconn.jsp" %>
+		<%@ include file="../script/nav_admin.jsp" %>
+		
+		<link rel="stylesheet" href = "../css/nav.css">
+		<link rel="stylesheet" href = "../css/mem_list.css">
 		<title>Insert title here</title>
 		
 		<script>
@@ -38,19 +40,6 @@
 	</head>
 	
 	<body>
-		<div class = "navigation_bar">
-				<ul class = "list">
-					<li class = "menu" style = "float : left;"><a href = "main.jsp">Home</a></li>
-					<li id = "logout"><a href = "logout.jsp">로그아웃</a></li>
-					<li class = "menu" style = "padding-right: 10px;">
-						<div class = "dropdown">관리자페이지</div>
-						<div class = "dropdown_menu">
-							<a href = "dept.jsp">부서관리</a>
-							<a href = "memberlist.jsp">회원관리</a>
-						</div>
-					</li>
-				</ul>
-		</div>
 			
 		<div class = "wrap">
 			<h1>부서관리</h1>

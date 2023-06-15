@@ -4,7 +4,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <%@ include file="./dbconn.jsp" %>
+        <%@ include file="../script/dbconn.jsp" %>
         <title>Insert title here</title>
     </head>
     

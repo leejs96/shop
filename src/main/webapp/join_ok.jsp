@@ -3,17 +3,19 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="./dbconn.jsp" %>
+		<%@ include file="../script/dbconn.jsp" %>
 		<meta charset="UTF-8">
 		<title>Insert title here</title>
 	</head>
 	
 	<body>
 		<%
+		int error = 0;
+		
 		request.setCharacterEncoding("UTF-8"); // post방식 사용시 한글 깨짐 방지
 		String user_id=request.getParameter("user_id");
 		String pw=request.getParameter("user_pw");
-		String dept=request.getParameter("select_dept");
+		String dept_No=request.getParameter("dept_No");
 		String name=request.getParameter("user_name");
 		String gender=request.getParameter("gender");
 		String birth_y=request.getParameter("user_birth_y");
@@ -30,13 +32,13 @@
 		String emailsts=request.getParameter("emailsts");
 		if(emailsts != "Y") {emailsts = "N";} 
 		String zipcode=request.getParameter("zipcode");
-		String lot_addr=request.getParameter("lot_addr");
+		String jibun_addr=request.getParameter("jibun_addr");
 		String road_addr=request.getParameter("road_addr");
 		String rest_addr=request.getParameter("rest_addr");
 		
 		PreparedStatement pstmt = null;
 		
-		String sql = "INSERT INTO shopping_member(member_id, member_pw, member_name, member_gender, member_birth_y, member_birth_m, member_birth_d, member_birth_gn, HP1, HP2, HP3, SMS_YN, email1, email2, emailsts_YN, zipcode, lot_addr, road_addr, rest_addr, dept_No)" + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO shopping_member(member_id, member_pw, member_name, member_gender, member_birth_y, member_birth_m, member_birth_d, member_birth_gn, HP1, HP2, HP3, SMS_YN, email1, email2, emailsts_YN, zipcode, jibun_addr, road_addr, rest_addr, dept_No)" + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		pstmt = conn.prepareStatement(sql);
 	
 		pstmt.setString(1, user_id);
@@ -55,20 +57,31 @@
 		pstmt.setString(14, email2);
 		pstmt.setString(15, emailsts);
 		pstmt.setString(16, zipcode);
-		pstmt.setString(17, lot_addr);
+		pstmt.setString(17, jibun_addr);
 		pstmt.setString(18, road_addr);
 		pstmt.setString(19, rest_addr);
-		pstmt.setString(20, dept);
+		pstmt.setString(20, dept_No);
 		
-		out.print(sql);
-		pstmt.executeUpdate();
+		try {
+			pstmt.executeUpdate();
+		} catch(Exception e) {
+			error++;
+			%>
+			<script>
+			alert("이미 존재하는 아이디입니다.");
+			window.history.back();
+			</script>
+			<%
+		}
 		
 		pstmt.close();
-		%>
 		
+		%>
 		<script>
-			alert("회원가입이 완료되었습니다.");
-			window.location.href="./login.jsp";
+			if(<%=error%> == 0) {
+				alert("회원가입이 완료되었습니다.");
+				window.location.href="./login.jsp";
+			}
 		</script>
 	</body>
 </html>

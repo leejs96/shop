@@ -3,13 +3,26 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="./dbconn.jsp" %>
 		<meta charset="UTF-8">
 		<title>회원가입</title>
+		<%@ include file="../script/dbconn.jsp" %>
+		<%@ include file="../script/nav_admin.jsp" %>
+		
+		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> <!-- 우편번호검색 -->
+		<script src="./script/daumPostcode.js"></script>
+		
 		<link rel="stylesheet" href = "./css/nav.css">
 		<link rel="stylesheet" href = "./css/member.css">
 		
 		<script>
+			function dbcheck_id(dbcheck) {
+				if(dbcheck.equals("Y")) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		
 			function check_id(user_id) { // 아이디 체크
 				var id_len = user_id.length;
 				
@@ -153,11 +166,12 @@
 			function validateForm() {
 				console.log('확인');
 		    	
+		    	var dbcheck = document.Registform.dbcheck.value;
 		    	var user_id = document.Registform.user_id.value;
 		    	var pw1 = document.Registform.user_pw.value;
 		    	var pw2 = document.Registform.user_pw_ch.value;
 		    	var user_name = document.Registform.user_name.value;
-		    	var dept = document.Registform.select_dept.value;
+		    	var dept = document.Registform.dept_No.value;
 		    	var gender = document.Registform.gender.value;
 		    	var Y = document.Registform.user_birth_y.value;
 		    	var M = document.Registform.user_birth_m.value;
@@ -169,58 +183,64 @@
 		    	var email1 = document.Registform.user_email1.value;
 		    	var email2 = document.Registform.user_email2.value;
 		    	var addr1 = document.Registform.zipcode.value;
-		    	var addr2 = document.Registform.lot_addr.value;
+		    	var addr2 = document.Registform.jibun_addr.value;
 		    	var addr3 = document.Registform.road_addr.value;
-		    	   
-		    	if (check_id(user_id)) 
+		    	
+		    	if (dbcheck_id(dbcheck))
 		    	{
-		    		if(check_pw(pw1, pw2))
-		    		{
-		    			if (check_name(user_name)) 
-		    			{
-		    				if (check_dept(dept)) 
-			    				{
-			    				if(check_gender(gender))
-			    				{
-			    					if(check_birth(Y, M, D, sl)) 
-		    						{
-					    				if(check_hp(hp1, hp2, hp3))
-					    				{
-					    					if(check_email(email1, email2))
-					    					{
-						    					if(check_address(addr1, addr2, addr3)) {
-					    							return true;
-						    					} else {
-						    						return false;
-						    					}
-				    						} else 
-				    						{
-							    				return false;
-				    						}
-				    					} else 
-					    				{
-							    			return false;
-					    				}
-	    							} else 
-		    						{
-						    			return false;
-		    						}
-		    					} else 
-			    				{
-					    			return false;
-			    				}
-		    				} else 
+			    	if (check_id(user_id)) 
+			    	{
+			    		if(check_pw(pw1, pw2))
+			    		{
+			    			if (check_name(user_name)) 
 			    			{
+			    				if (check_dept(dept)) 
+				    				{
+				    				if(check_gender(gender))
+				    				{
+				    					if(check_birth(Y, M, D, sl)) 
+			    						{
+						    				if(check_hp(hp1, hp2, hp3))
+						    				{
+						    					if(check_email(email1, email2))
+						    					{
+							    					if(check_address(addr1, addr2, addr3)) {
+						    							return true;
+							    					} else {
+							    						return false;
+							    					}
+					    						} else 
+					    						{
+								    				return false;
+					    						}
+					    					} else 
+						    				{
+								    			return false;
+						    				}
+		    							} else 
+			    						{
+							    			return false;
+			    						}
+			    					} else 
+				    				{
+						    			return false;
+				    				}
+			    				} else 
+				    			{
+					    			return false;
+				    			}
+				    		} else 
+				    		{
 				    			return false;
-			    			}
+				    		}
 			    		} else 
 			    		{
 			    			return false;
 			    		}
-		    		} else 
-		    		{
-		    			return false;
-		    		}
+			    	} else
+			    	{
+			    		return false;
+			    	}
 		    	} else
 		    	{
 		    		return false;
@@ -231,18 +251,6 @@
 	</head>
 	
 	<body>
-		<div class = "navigation_bar">
-			<div class = "navigation_bar" style = "float : left;">
-				<ul class = "list">
-					<li class = "menu"><a href = "main.jsp">Home</a></li>
-				</ul>
-			</div>
-			<div class = "navigation_bar" style = "float : right;">
-				<ul class = "list">
-					<li class = "menu"><a href = "login.jsp">로그인</a></li>
-				</ul>
-			</div>
-		</div>
 	
 		<div class = "wrap" style = "width: 615px;">
 			<h1>회원가입</h1>
@@ -252,7 +260,8 @@
 						<td class = "title" >아이디</td>
 						<td colspan = "2">
 							<input type = "text" name=user_id id=user_id>
-							<button type = "button" onclick = "id_doublecheck()">중복확인</button>
+							<!-- <button type = "button" onclick = "id_doublecheck()">중복확인</button>
+							<input type="hidden" name="dbcheck"> -->
 						</td>
 					</tr>
 					<tr>
@@ -270,7 +279,7 @@
 					<tr>
 						<td class = "title">부서명</td>
 						<td colspan = "2">
-							<select name = "select_dept">
+							<select name = "dept_No">
 								<option value = "1">선택</option>
 								<option value = "10">인사팀</option>
 								<option value = "20">재무팀</option>
@@ -328,13 +337,13 @@
 						<td class = "addrTitle">우편번호</td>
 						<td class = "addr">
 							<input type = "text" name=zipcode id = zipcode value = "13536">
-							<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
+							<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기">
 						</td>
 					</tr>
 					<tr>
 						<td class = "addrTitle">지번주소</td>
 						<td class = "addr">
-							<input type = "text" name=lot_addr id = lot_addr style = "width: 85%;">
+							<input type = "text" name=jibun_addr id = jibun_addr style = "width: 85%;">
 						</td>
 					</tr>
 					<tr>
@@ -355,52 +364,30 @@
 			</form>
 		</div>
 		
-		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> <!-- 우편번호검색 -->
-		<script>
-			function sample6_execDaumPostcode() {
-			    new daum.Postcode({
-			        oncomplete: function(data) {
-			            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+		<%-- <script>
+			var user_id = document.Registform.user_id.value;
 			
-			            // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-			            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-			            var addr = ''; // 주소 변수
-			            var extraAddr = ''; // 참고항목 변수
-			
-			            //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-			            if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-			                addr = data.roadAddress;
-				            document.getElementById("road_addr").value = addr;
-			            } else { // 사용자가 지번 주소를 선택했을 경우(J)
-			                addr = data.jibunAddress;
-				            document.getElementById("lot_addr").value = addr;
-			            }
-			            document.getElementById('zipcode').value = data.zonecode;
-			        }
-			    }).open();
-			}
-		</script>
-		
-		<script>
-			function id_doublecheck() { // 아이디 중복확인 만들기부터 시작
+			function id_doublecheck(user_id) { // 아이디 중복확인 만들기부터 시작
 				<%
-				//var user_id = document.Registform.user_id.value;
 				/* location.href="join.jsp?id=" + user_id; */
 			 	PreparedStatement pstmt = null;
 				ResultSet rs = null;
 				
-				String sql = "SELECT count(*) as cnt FROM shopping_member WHERE member_id = '" + id + "'";
+				String sql = "SELECT count(*) as cnt FROM shopping_member WHERE member_id = '" + %>user_id<%  + "'";
 				pstmt = conn.prepareStatement(sql);
 				rs = pstmt.executeQuery();
 				
-				if(rs.next()){
+				int cnt = rs.getInt("cnt");
 				%>
+				if(cnt != 0){
+					alert("<%=sql%>");
 					alert("사용할 수 없는 ID입니다.");
-				<%} else{%>
+				} else {
 					alert("사용할 수 있는 ID입니다.");
-				<%}%>
+					document.Registform.dbcheck.value = "Y";
+				}
 			}
-		</script>
+		</script> --%>
 	</body>
 </html>
 

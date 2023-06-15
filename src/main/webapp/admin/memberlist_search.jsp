@@ -4,29 +4,15 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<%@ include file="./dbconn.jsp" %>
-		<link rel="stylesheet" href = "./css/nav.css">
-		<link rel="stylesheet" href = "./css/mem_list.css?after">
+		<%@ include file="../script/dbconn.jsp" %>
+		<%@ include file="../script/nav_admin.jsp" %>
+		
+		<link rel="stylesheet" href = "../css/nav.css">
+		<link rel="stylesheet" href = "../css/mem_list.css?after">
 		<title>회원리스트</title>
 	</head>
 	
 	<body>
-		<div class = "navigation_bar">
-			<div class = "navigation_bar" id = "sub">
-				<ul class = "list">
-					<li class = "menu" style = "float : left;"><a href = "main.jsp">Home</a></li>
-					<li id = "logout"><a href = "logout.jsp">로그아웃</a></li>
-					<li class = "menu" style = "padding-right: 10px;">
-						<div class = "dropdown">관리자페이지</div>
-						<div class = "dropdown_menu">
-							<a href = "dept.jsp">부서관리</a>
-							<a href = "memberlist.jsp">회원관리</a>
-						</div>
-					</li>
-				</ul>
-			</div>
-		</div>
-	
 		<%
 			String opt=request.getParameter("opt");
 			String search=request.getParameter("search") != null ? request.getParameter("search") : "";
@@ -36,7 +22,14 @@
 			String SMSN=request.getParameter("SMSN") != null ? request.getParameter("SMSN") : "";
 			String emailY=request.getParameter("emailY") != null ? request.getParameter("emailY") : "";
 			String emailN=request.getParameter("emailN") != null ? request.getParameter("emailN") : "";
+			String joindate1=request.getParameter("joindate1") != null ? request.getParameter("joindate1") : "";
+			String joindate2=request.getParameter("joindate2") != null ? request.getParameter("joindate2") : "";
 		%>
+		
+		<%-- <script>
+			alert("<%=joindate1%>");
+		</script> --%>
+		
 		<div class = "wrap">
 		<h1>회원관리</h1>
 		<form name="SearchForm" action=memberlist_search.jsp method=get onSubmit="return validateForm();" style = "margin : 5px; border : 1px solid;">
@@ -48,7 +41,7 @@
 					<option value = "member_name"<% if(opt.equals("member_name")){%> selected<%}%>>이름</option>
 					<option value = "dept_Name"<% if(opt.equals("dept_Name")){%> selected<%}%>>부서명</option>
 					<option value = "zipcode"<% if(opt.equals("zipcode")){%> selected<%}%>>우편번호</option>
-					<option value = "lot_addr"<% if(opt.equals("lot_addr")){%> selected<%}%>>지번주소</option>
+					<option value = "jibun_addr"<% if(opt.equals("jibun_addr")){%> selected<%}%>>지번주소</option>
 					<option value = "road_addr"<% if(opt.equals("road_addr")){%> selected<%}%>>도로명주소</option>
 				</select>
 				<input type = "search" name = "search" style = "height : 25px;" value = <%=search %>>
@@ -76,8 +69,15 @@
 						<input type = "checkbox" name = "emailN" value = "N" <% if(emailN.equals("N")){%> checked<%}%>>미허용
 					</td>
 				</tr>
-				</table>
-			</form>
+				<tr>
+					<td class="cond">가입날짜</td>
+					<td>
+						<input type = "date" name = "joindate1" min = "2020-01-01" <% if(!joindate1.equals("")){%> value = <%=joindate1%><%}%>> ~
+						<input type = "date" name = "joindate2" min = "2020-01-01" <% if(!joindate2.equals("")){%> value = <%=joindate2%><%}%>>
+					</td>
+				</tr>
+			</table>
+		</form>
 			
 			<div style = "margin-top: 20px;">
 				<button onclick = "location = 'memberlist.jsp'">전체 리스트보기</button>
@@ -146,6 +146,11 @@
 				}else{
 				}
 				
+				if(!(joindate1.equals("") && joindate2.equals(""))){
+					sql += "and joindate between '" + joindate1 + "' and '" + joindate2 + "'";
+				}else{
+				}
+				
 				sql += " ORDER BY member_id ASC";
 				
 				pstmt = conn.prepareStatement(sql);
@@ -156,7 +161,7 @@
 					count++;
 					String member_id = rs.getString("member_id");
 					String name = rs.getString("member_name");
-					String dept = rs.getString("dept_Name");
+					String dept_Name = rs.getString("dept_Name");
 					String gender = rs.getString("member_gender");
 					String birth_y = rs.getString("member_birth_y");
 					String birth_m = rs.getString("member_birth_m");
@@ -170,17 +175,17 @@
 					String email2 = rs.getString("email2");
 					String emailsts_YN = rs.getString("emailsts_YN");
 					String DBzipcode = rs.getString("zipcode");
-					String DBlot_addr = rs.getString("lot_addr");
+					String DBjibun_addr = rs.getString("jibun_addr");
 					String DBroad_addr = rs.getString("road_addr");
 					String DBrest_addr = rs.getString("rest_addr");
-					String joindate = rs.getString("joindate");
+					String DBjoindate = rs.getString("joindate");
 			%>
 	
 			<tr>
 				<td><%=i%></td>
 				<td><%=member_id%></td>
 				<td><%=name %></td>
-				<td><%=dept %></td>
+				<td><%=dept_Name %></td>
 				<td><%=gender %></td>
 				<td><%=birth_y%>/<%=birth_m%>/<%=birth_d%>(<%=birth_gn%>)</td>
 				<td><%=HP1%>-<%=HP2%>-<%=HP3%></td>
@@ -188,10 +193,10 @@
 				<td><%=email1%>@<%=email2%></td>
 				<td><%=emailsts_YN%></td>
 				<td><%=DBzipcode%></td>
-				<td><%=DBlot_addr%></td>
+				<td><%=DBjibun_addr%></td>
 				<td><%=DBroad_addr%></td>
 				<td><%=DBrest_addr%></td>
-				<td><%=joindate%></td>
+				<td><%=DBjoindate%></td>
 				<td><button id = <%=member_id%> onclick = "mem_delete(this.id);">삭제</button></td>
 			</tr>
 			<%

@@ -5,15 +5,15 @@
 	<head>
 		<meta charset="UTF-8">
 		<%@ include file="../script/dbconn.jsp" %>
-		<%@ include file="../script/nav_admin.jsp" %>
+		<link rel="stylesheet" href = "./css/member.css">
 		
 		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> <!-- 우편번호검색 -->
 		<script src="./script/daumPostcode.js"></script>
 		
-		<link rel="stylesheet" href = "./css/nav.css">
-		<link rel="stylesheet" href = "./css/member.css?after">
-		<title>정보페이지</title>
+		<title>Insert title here</title>
+	</head>
 	
+	<body>
 		<script>
 			function check_dept(dept) {
 				if(dept == "1")
@@ -105,10 +105,10 @@
 	</head>
 	
 	<body>
-	
+		<h1>회원 정보</h1>
 		<div  class = "wrap" style = "width: 615px;">
-			<h1>내 정보</h1>
 			<%
+				String user_id=request.getParameter("user_id");
 				PreparedStatement pstmt = null;
 				ResultSet rs = null;
 				
@@ -167,19 +167,16 @@
 				}
 			</script>
 		
-			<form name="info" action = "info_update.jsp" method=get onSubmit="return validateForm();">
+			<form name="info" action=info_update.jsp method=get onSubmit="return validateForm();">
 				<table>
 					<tr>
 						<td class = "title">아이디</td>
-						<td colspan = "2">
-							<input type = "text" name=user_id id=user_id value = <%=member_id%> disabled>
-						</td>
+						<td colspan = "2"><input type = "text" name=user_id id=user_id value = <%=member_id%> readonly></td>
 					</tr>
 					<tr>
 						<td class = "title">비밀번호</td>
 						<td colspan = "2">
 							<input type = "password" name=user_pw id=user_pw disabled>
-							<input type="button" value="비밀번호 변경" onclick="change_pw()">
 						</td>
 					</tr>
 					<tr>
@@ -224,7 +221,6 @@
 					<tr>
 						<td colspan = "2">
 							<input type = "checkbox" name = "sms" value='Y' id="sms" <%if(SMS_YN.equals("Y")) {%>checked<%} %>>
-							<!-- <input type="hidden" name="sms" value='N' id="sms_hidden"> -->
 							쇼핑몰에서 발송하는 SMS 소식을 수신합니다.
 						</td>
 					</tr>
@@ -242,7 +238,6 @@
 					</tr>
 						<tr>
 							<td colspan = "2"><input type = "checkbox" name = "emailsts" value = "Y"  id="emailsts" <%if(emailsts_YN.equals("Y")) {%>checked<%} %>>
-							<!-- <input type="hidden" name="emailsts" value='N' id="emailsts_hidden"> -->
 							쇼핑몰에서 발송하는 e-mail을 수신합니다.</td>
 						</tr>
 					<tr>
@@ -299,9 +294,4 @@
 			document.Registform.user_email2.value = document.Registform.select_email.value;
 		}
 	}
-	
-	function change_pw() {
-		window.open("http://localhost:8060/web02/Change_pw.jsp", "name(about:blank)", "width=500, height=500");
-	}
-
 </script>

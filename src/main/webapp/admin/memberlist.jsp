@@ -4,29 +4,15 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<%@ include file="./dbconn.jsp" %>
 		<title>회원리스트</title>
+		<%@ include file="../script/dbconn.jsp" %>
+		<%@ include file="../script/nav_admin.jsp" %>
 		
-		<link rel="stylesheet" href = "./css/nav.css?after">
-		<link rel="stylesheet" href = "./css/mem_list.css?">
+		<link rel="stylesheet" href = "../css/nav.css">
+		<link rel="stylesheet" href = "../css/mem_list.css?">
 	</head>
 	
 	<body>
-		<div class = "navigation_bar">
-			<div class = "navigation_bar" id = "sub">
-				<ul class = "list">
-					<li class = "menu" style = "float : left;"><a href = "main.jsp">Home</a></li>
-					<li id = "logout"><a href = "logout.jsp">로그아웃</a></li>
-					<li class = "menu" style = "padding-right: 10px;">
-						<div class = "dropdown">관리자페이지</div>
-						<div class = "dropdown_menu">
-							<a href = "dept.jsp">부서관리</a>
-							<a href = "memberlist.jsp">회원관리</a>
-						</div>
-					</li>
-				</ul>
-			</div>
-		</div>
 	
 		<div class = "wrap">
 			<h1>회원관리</h1>
@@ -39,7 +25,7 @@
 							<option value = "member_name">이름</option>
 							<option value = "dept_Name">부서명</option>
 							<option value = "zipcode">우편번호</option>
-							<option value = "lot_addr">지번주소</option>
+							<option value = "jibun_addr">지번주소</option>
 							<option value = "road_addr">도로명주소</option>
 						</select>
 						<input type = "search" name = "search" style = "height : 25px;">
@@ -65,6 +51,13 @@
 						<td>
 							<input type = "checkbox" name = "emailY" value = "Y">허용
 							<input type = "checkbox" name = "emailN" value = "N">미허용
+						</td>
+					</tr>
+					<tr>
+						<td class="cond">가입날짜</td>
+						<td>
+							<input type = "date" name = "joindate1" min = "2020-01-01"> ~
+							<input type = "date" name = "joindate2" min = "2020-01-01">
 						</td>
 					</tr>
 				</table>
@@ -109,7 +102,7 @@
 				while (rs.next()) {
 					String member_id = rs.getString("member_id");
 					String name = rs.getString("member_name");
-					String dept = rs.getString("dept_Name");
+					String dept_Name = rs.getString("dept_Name");
 					String gender = rs.getString("member_gender");
 					String birth_y = rs.getString("member_birth_y");
 					String birth_m = rs.getString("member_birth_m");
@@ -123,7 +116,7 @@
 					String email2 = rs.getString("email2");
 					String emailsts_YN = rs.getString("emailsts_YN");
 					String DBzipcode = rs.getString("zipcode");
-					String DBlot_addr = rs.getString("lot_addr");
+					String DBjibun_addr = rs.getString("jibun_addr");
 					String DBroad_addr = rs.getString("road_addr");
 					String DBrest_addr = rs.getString("rest_addr");
 					String joindate = rs.getString("joindate");
@@ -134,7 +127,7 @@
 					<td><%=i%></td>
 					<td><%=member_id%></td>
 					<td><%=name %></td>
-					<td><%=dept %></td>
+					<td><%=dept_Name %></td>
 					<td><%=gender %></td>
 					<td><%=birth_y%>/<%=birth_m%>/<%=birth_d%>(<%=birth_gn%>)</td>
 					<td><%=HP1%>-<%=HP2%>-<%=HP3%></td>
@@ -142,7 +135,7 @@
 					<td><%=email1%>@<%=email2%></td>
 					<td><%=emailsts_YN%></td>
 					<td><%=DBzipcode%></td>
-					<td><%=DBlot_addr%></td>
+					<td><%=DBjibun_addr%></td>
 					<td><%=DBroad_addr%></td>
 					<td><%=DBrest_addr%></td>
 					<td><%=joindate%></td>
@@ -164,7 +157,7 @@
 		if (confirm(id + "님의 계정을 삭제하시겠습니까?") == true) {
 			var manage_num = prompt("관리자 비밀번호를 입력해주세요.");
 	        if(manage_num == "0000") {
-				location.href="memberlist_delete.jsp?target=" + id;
+				location.href="memberlist_delete.jsp?update=delete&target=" + id;
 	        } else if(manage_num == null){
 				return false;
 	        } else {
@@ -177,5 +170,6 @@
 	}
 	
 	function mem_update(id) {
+		window.open("http://localhost:8060/web02/change_info.jsp?user_id=" + id, "name(about:blank)", "width=700, height=900")
 	}
 </script>

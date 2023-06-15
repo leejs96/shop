@@ -5,7 +5,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<%@page session="true"%>
-		<%@ include file="./dbconn.jsp" %>
+		<%@ include file="../script/dbconn.jsp" %>
 		<title>Insert title here</title>
 	</head>
 	
@@ -14,40 +14,23 @@
 			String che = request.getParameter("checkN");
 			request.setCharacterEncoding("UTF-8");
 			String user_id = (String)session.getAttribute("member_id");		
-		
 			if(che == null) {
 				String hp1=request.getParameter("user_hp1");
 				String hp2=request.getParameter("user_hp2");
 				String hp3=request.getParameter("user_hp3");
 				String sms=request.getParameter("sms");
+				if(sms == null) {sms = "N";}
 				String email1=request.getParameter("user_email1");
 				String email2=request.getParameter("user_email2");
 				String emailsts=request.getParameter("emailsts");
+				if(emailsts == null) {emailsts = "N";}
 				String zipcode=request.getParameter("zipcode");
-				String lot_addr=request.getParameter("lot_addr");
+				String jibun_addr=request.getParameter("jibun_addr");
 				String road_addr=request.getParameter("road_addr");
 				String rest_addr=request.getParameter("rest_addr");
-			%>
-				<table>
-					<tr>
-						<td><%=hp1%></td>
-						<td><%=hp2%></td>
-						<td><%=hp3%></td>	
-						<td><%=sms%></td>
-						<td><%=email1%></td>
-						<td><%=email2%></td>
-						<td><%=emailsts%></td>
-						<td><%=zipcode%></td>
-						<td><%=lot_addr%></td>
-						<td><%=road_addr%></td>
-						<td><%=rest_addr%></td>
-					</tr>
-				</table>
-			
-			<%
-			
+				String dept_No=request.getParameter("dept_No");
 				PreparedStatement pstmt = null;
-				String sql = "UPDATE shopping_member SET HP1 =?, HP2 =?, HP3 =?, SMS_YN =?, email1 =?, email2 =?, emailsts_YN =?, zipcode =?, lot_addr =?, road_addr =?, rest_addr =? WHERE member_id ='" + user_id + "'";
+				String sql = "UPDATE shopping_member SET HP1 =?, HP2 =?, HP3 =?, SMS_YN =?, email1 =?, email2 =?, emailsts_YN =?, zipcode =?, jibun_addr =?, road_addr =?, rest_addr =?, dept_No=? WHERE member_id ='" + user_id + "'";
 		
 				pstmt = conn.prepareStatement(sql);
 				
@@ -59,9 +42,10 @@
 				pstmt.setString(6, email2);
 				pstmt.setString(7, emailsts);
 				pstmt.setString(8, zipcode);
-				pstmt.setString(9, lot_addr);
+				pstmt.setString(9, jibun_addr);
 				pstmt.setString(10, road_addr);
 				pstmt.setString(11, rest_addr);
+				pstmt.setString(12, dept_No);
 				
 				out.print(sql);
 				pstmt.executeUpdate();
